@@ -233,7 +233,7 @@ function Languages() {
                         </a>
 
                         <Tooltip anchorSelect="#phone" place="right" className="z-40">
-                            Call Haarvish
+                            +91 83417 35406
                         </Tooltip>
 
                     </div>

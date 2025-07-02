@@ -610,7 +610,7 @@ const Projects = () => {
                             <div className="flex flex-1 justify-between mb-5 items-center">
                                 <div>
                                     <h2 className="text-black font-semibold text-2xl">
-                                        {work.tooltip} <span className="text-[#E16349] text-normal">@</span> <span className="underline cursor-pointer" onClick={() => window.open('https://circlehealth.in')}>{work.title}</span>
+                                        {work.tooltip} <span className="text-[#E16349] text-normal">@</span> <span className="underline cursor-pointer" onClick={() => window.open('https://temperstack.com')}>{work.title}</span>
                                     </h2>
                                     {work.date && <p className="text-[#555] text-sm">{work.date}</p>}
                                 </div>
