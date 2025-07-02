@@ -547,7 +547,7 @@ const Projects = () => {
                 {projects.map((project) => (
                   <div
                     key={project.id}
-                    className="flex flex-1 bg-white p-6 rounded-[25px] border border-[#eaeaea] hover:scale-105 shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out min-h-[280px] max-w-[480px]"
+                    className="flex flex-1 bg-white p-6 rounded-[25px] border border-[#eaeaea] hover:scale-105 shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out h-full max-w-[480px]"
                   >
                       <div className="flex flex-col h-full justify-between w-full">
                           {/* Project Title */}
