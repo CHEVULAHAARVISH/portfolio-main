@@ -40,11 +40,11 @@ export default function Thesis() {
   return (
     <section
       id="thesis"
-      className="relative py-28 md:py-36 border-t hairline"
+      className="relative py-20 md:py-36 border-t hairline"
     >
       <div className="container-edge">
         {/* Eyebrow */}
-        <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest2 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono uppercase tracking-widest2 mb-6">
           <span className="flex items-center gap-3">
             <span style={{ color: 'var(--accent)' }}>[S.03]</span>
             <span style={{ color: 'var(--fg)' }}>Thesis</span>
@@ -239,16 +239,16 @@ function PipelineStrip() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-15% 0px' }}
             transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
-            className="relative p-4 md:p-5 text-center"
+            className="relative p-2 sm:p-4 md:p-5 text-center"
           >
             <div
-              className={`font-mono text-[10px] uppercase tracking-widest2 mb-2 stage-hi-${i}`}
+              className={`font-mono text-[9px] sm:text-[10px] uppercase tracking-widest2 mb-1 sm:mb-2 stage-hi-${i}`}
               style={{ color: 'var(--faint)' }}
             >
               P.0{i + 1}
             </div>
             <div
-              className="font-display italic text-xl md:text-2xl"
+              className="font-display italic text-xs sm:text-xl md:text-2xl leading-tight"
               style={{ color: 'var(--fg)' }}
             >
               {stage}

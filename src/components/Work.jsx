@@ -58,11 +58,11 @@ export default function Work() {
   return (
     <section
       id="work"
-      className="relative py-28 md:py-36 border-t hairline"
+      className="relative py-20 md:py-36 border-t hairline"
     >
       <div className="container-edge">
         {/* Eyebrow */}
-        <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest2 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono uppercase tracking-widest2 mb-6">
           <span className="flex items-center gap-3">
             <span style={{ color: 'var(--accent)' }}>[S.04]</span>
             <span style={{ color: 'var(--fg)' }}>Trajectory</span>

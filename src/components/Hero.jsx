@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section
       id="identity"
-      className="relative min-h-[92vh] pt-20 pb-28 overflow-hidden"
+      className="relative min-h-[92vh] pt-16 pb-20 md:pt-20 md:pb-28 overflow-hidden"
     >
       <BlueprintBackdrop />
 
@@ -49,7 +49,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 1.7 }}
             className="flex-1 min-w-0 font-display italic leading-[0.92] tracking-tight"
             style={{
-              fontSize: 'clamp(4.5rem, 14vw, 12rem)',
+              fontSize: 'clamp(3.6rem, 14vw, 12rem)',
             }}
           >
             <OverflowReveal delay={1.75}>
@@ -93,7 +93,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 2.6 }}
-          className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-[11px] uppercase tracking-widest2"
+          className="mt-12 flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-3 font-mono text-[11px] uppercase tracking-widest2"
           style={{ color: 'var(--muted)' }}
         >
           <span className="flex items-center gap-2">
@@ -102,14 +102,14 @@ export default function Hero() {
             <span className="opacity-50">·</span>
             <span>Ferronyx</span>
           </span>
-          <span className="opacity-30">|</span>
+          <span className="opacity-30 hidden sm:inline">|</span>
           <span className="flex items-center gap-2">
             <span style={{ color: 'var(--accent)' }}>/02</span>
             <span style={{ color: 'var(--fg)' }}>Research</span>
             <span className="opacity-50">·</span>
             <span>SORA</span>
           </span>
-          <span className="opacity-30">|</span>
+          <span className="opacity-30 hidden sm:inline">|</span>
           <span className="flex items-center gap-2">
             <span style={{ color: 'var(--accent)' }}>/03</span>
             <span style={{ color: 'var(--fg)' }}>Engineer</span>
@@ -132,9 +132,18 @@ export default function Hero() {
           />
           <span>
             Scroll ·{' '}
-            <span style={{ color: 'var(--muted)' }}>
+            <span
+              className="hidden md:inline"
+              style={{ color: 'var(--muted)' }}
+            >
               S.01 Ferronyx — S.02 SORA — S.03 Thesis — S.04 Trajectory — S.05
               Contact
+            </span>
+            <span
+              className="md:hidden"
+              style={{ color: 'var(--muted)' }}
+            >
+              S.01 Ferronyx ↓
             </span>
           </span>
         </motion.div>

@@ -15,7 +15,7 @@ export default function Ferronyx() {
   return (
     <section
       id="ferronyx"
-      className="relative py-28 md:py-36 border-t hairline"
+      className="relative py-20 md:py-36 border-t hairline"
     >
       <div className="container-edge relative">
         {/* Humanoid robot illustration — upper right, desktop only */}
@@ -30,7 +30,7 @@ export default function Ferronyx() {
         </motion.div>
 
         {/* Eyebrow row */}
-        <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest2 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono uppercase tracking-widest2 mb-6">
           <span className="flex items-center gap-3">
             <span style={{ color: 'var(--accent)' }}>[S.01]</span>
             <span style={{ color: 'var(--fg)' }}>Ferronyx</span>
@@ -237,7 +237,7 @@ export default function Ferronyx() {
 function Metric({ label, value, sub, bordered, last }) {
   return (
     <div
-      className={`px-0 md:px-8 py-8 ${
+      className={`px-0 md:px-8 py-6 md:py-8 ${
         bordered ? 'md:border-x hairline-strong' : ''
       } ${last ? '' : 'border-b md:border-b-0'} hairline-strong`}
     >
@@ -332,7 +332,7 @@ function TerminalMock() {
       </div>
 
       {/* Topic rows — streamed in */}
-      <div className="font-mono text-[12px] md:text-[13px] px-4 py-4 min-h-[320px]">
+      <div className="font-mono text-[12px] md:text-[13px] px-4 py-4 min-h-[260px] md:min-h-[320px]">
         <motion.div
           variants={{
             hidden: {},
