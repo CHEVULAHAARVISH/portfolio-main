@@ -1,5 +1,5 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
 import Humanoid from './illustrations/Humanoid.jsx';
 
 const inView = {
@@ -8,7 +8,10 @@ const inView = {
   viewport: { once: true, margin: '-10% 0px' },
 };
 
+const EXPAND_EASE = [0.2, 0.8, 0.2, 1];
+
 export default function Ferronyx() {
+  const [expanded, setExpanded] = useState(false);
   return (
     <section
       id="ferronyx"
@@ -97,44 +100,80 @@ export default function Ferronyx() {
           />
         </motion.div>
 
-        {/* Mock terminal + capabilities */}
-        <div className="mt-20 grid grid-cols-1 lg:grid-cols-5 gap-10">
-          <motion.div
-            {...inView}
-            transition={{ duration: 0.9, delay: 0.3 }}
-            className="lg:col-span-3"
+        {/* Expand toggle — reveals terminal + capabilities */}
+        <motion.div
+          {...inView}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-14"
+        >
+          <button
+            type="button"
+            onClick={() => setExpanded((e) => !e)}
+            aria-expanded={expanded}
+            className="group inline-flex items-center gap-3 py-3 px-5 border hairline-strong hover:bg-[var(--card-hover)] transition-colors font-mono text-[11px] uppercase tracking-widest2"
+            style={{ color: 'var(--fg)' }}
           >
-            <TerminalMock />
-          </motion.div>
+            <span
+              className="inline-block h-1.5 w-1.5 rounded-full"
+              style={{ background: 'var(--accent)' }}
+            />
+            <span>
+              {expanded ? 'Collapse architecture' : 'Read architecture'}
+            </span>
+            <span
+              className="transition-transform duration-300"
+              style={{
+                transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                color: 'var(--muted)',
+              }}
+            >
+              ↓
+            </span>
+          </button>
+        </motion.div>
 
-          <motion.div
-            {...inView}
-            transition={{ duration: 0.9, delay: 0.4 }}
-            className="lg:col-span-2 flex flex-col gap-0 border-t hairline-strong"
-          >
-            <Capability
-              n="01"
-              title="Real-time Observability"
-              body="Live topic graphs, node health, message rates, and QoS diagnostics streamed across the fleet."
-            />
-            <Capability
-              n="02"
-              title="AI-assisted RCA"
-              body="Autonomous correlation across nodes, transforms, and sensor streams — the agent tells you why the robot stopped, not just that it did."
-            />
-            <Capability
-              n="03"
-              title="Fleet Diagnostics"
-              body="Cross-vehicle pattern detection. Firmware regressions and hardware-cohort drift surface at the fleet level before they surface at the robot level."
-            />
-            <Capability
-              n="04"
-              title="Anywhere Access"
-              body="Debug a robot in the field from a laptop. Remote triage without a VPN dance, without a bridge, without flying an engineer out."
-              last
-            />
-          </motion.div>
-        </div>
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="ferronyx-detail"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.55, ease: EXPAND_EASE }}
+              style={{ overflow: 'hidden' }}
+            >
+              <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-10">
+                <div className="lg:col-span-3">
+                  <TerminalMock />
+                </div>
+
+                <div className="lg:col-span-2 flex flex-col gap-0 border-t hairline-strong">
+                  <Capability
+                    n="01"
+                    title="Real-time Observability"
+                    body="Live topic graphs, node health, message rates, and QoS diagnostics streamed across the fleet."
+                  />
+                  <Capability
+                    n="02"
+                    title="AI-assisted RCA"
+                    body="Autonomous correlation across nodes, transforms, and sensor streams — the agent tells you why the robot stopped, not just that it did."
+                  />
+                  <Capability
+                    n="03"
+                    title="Fleet Diagnostics"
+                    body="Cross-vehicle pattern detection. Firmware regressions and hardware-cohort drift surface at the fleet level before they surface at the robot level."
+                  />
+                  <Capability
+                    n="04"
+                    title="Anywhere Access"
+                    body="Debug a robot in the field from a laptop. Remote triage without a VPN dance, without a bridge, without flying an engineer out."
+                    last
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* CTA bar */}
         <motion.div

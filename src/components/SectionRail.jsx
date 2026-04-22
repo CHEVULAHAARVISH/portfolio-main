@@ -17,7 +17,6 @@ export default function SectionRail() {
     const entries = new Map();
 
     const update = () => {
-      // Pick the section with the largest intersection ratio currently visible
       let best = null;
       let bestRatio = 0;
       for (const [id, ratio] of entries.entries()) {
@@ -67,36 +66,35 @@ export default function SectionRail() {
           <button
             key={id}
             onClick={() => go(id)}
-            className="group flex items-center gap-3 py-2 text-left"
+            aria-label={`Jump to ${label}`}
             aria-current={isActive ? 'true' : undefined}
+            className="group relative block py-2 w-5"
           >
+            {/* Rail tick — the only clickable shape */}
             <span
-              className="relative flex items-center justify-center h-4 w-4"
-              aria-hidden="true"
-            >
-              <span
-                className="absolute inline-block h-px w-3 transition-all duration-300"
-                style={{
-                  background: isActive ? 'var(--accent)' : 'var(--line-strong)',
-                  width: isActive ? '20px' : '12px',
-                  opacity: isActive ? 1 : 0.7,
-                }}
-              />
-            </span>
-            <span
-              className="font-mono text-[10px] uppercase tracking-widest2 transition-all duration-300"
+              className="block h-px transition-all duration-300"
               style={{
-                color: isActive ? 'var(--accent)' : 'var(--faint)',
+                background: isActive ? 'var(--accent)' : 'var(--line-strong)',
+                width: isActive ? '20px' : '12px',
+                opacity: isActive ? 1 : 0.7,
+              }}
+            />
+            {/* Label — absolutely positioned, pointer-events-none so it
+                cannot catch clicks and the button's hit area stays tiny */}
+            <span
+              className="pointer-events-none absolute left-7 top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-[10px] uppercase tracking-widest2 transition-all duration-300"
+              style={{
+                color: isActive ? 'var(--accent)' : 'var(--muted)',
                 opacity: isActive ? 1 : 0,
-                transform: `translateX(${isActive ? 0 : -4}px)`,
+                transform: `translate(${isActive ? 0 : -4}px, -50%)`,
               }}
             >
               S.{num} · {label}
             </span>
-            {/* Always-visible section number (even when inactive, appears on hover) */}
+            {/* Hover-only label for inactive items — also pointer-events-none */}
             {!isActive && (
               <span
-                className="font-mono text-[10px] uppercase tracking-widest2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                className="pointer-events-none absolute left-7 top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-[10px] uppercase tracking-widest2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 style={{ color: 'var(--muted)' }}
               >
                 S.{num} · {label}
