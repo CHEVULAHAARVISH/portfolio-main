@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import Spacecraft from './illustrations/Spacecraft.jsx';
 
 const inView = {
@@ -7,7 +8,12 @@ const inView = {
   viewport: { once: true, margin: '-10% 0px' },
 };
 
+const EXPAND_EASE = [0.2, 0.8, 0.2, 1];
+const BRIEF_MAILTO =
+  'mailto:haarvish@gmail.com?subject=SORA%20research%20brief%20request&body=Name%3A%20%0AAffiliation%3A%20%0AContext%20%2F%20research%20interest%3A%20%0A%0A%28Optional%3A%20describe%20specific%20modules%20or%20results%20of%20interest%29';
+
 export default function Sora() {
+  const [expanded, setExpanded] = useState(false);
   return (
     <section
       id="sora"
@@ -105,153 +111,198 @@ export default function Sora() {
           </p>
         </motion.div>
 
-        {/* Dual-gap framing — industry-known problems, not novel IP */}
+        {/* Primary CTA + status — always visible, compact */}
         <motion.div
           {...inView}
           transition={{ duration: 0.8, delay: 0.35 }}
-          className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-0 border-y hairline-strong"
+          className="mt-16"
         >
-          <Gap
-            n="G.01"
-            title="The limits of static FDIR"
-            body="Modern spacecraft health management is rule-based — hand-authored fault trees and threshold checks. Brittle across novel fault modes. Unable to correlate across subsystems. At 20-minute deep-space latency, undetected cascading failure means mission loss."
-          />
-          <Gap
-            n="G.02"
-            title="The end-of-life gap"
-            bordered
-            body="14,000+ active satellites, most without onboard end-of-life actuation intelligence. A 10,000-vehicle constellation without self-disposal needs 10,000 dedicated removal spacecraft — compounding the debris problem during the removal itself."
-          />
-        </motion.div>
-
-        {/* Architecture — redacted */}
-        <motion.div
-          {...inView}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-28"
-        >
-          <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
-            <div>
-              <h3
-                className="font-display italic text-4xl md:text-5xl"
-                style={{ color: 'var(--fg)' }}
-              >
-                Architecture
-              </h3>
-            </div>
-            <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-widest2">
-              <span
-                className="flex items-center gap-2 px-2 py-0.5 border hairline-strong"
-                style={{ color: 'var(--accent)', borderColor: 'var(--accent-dim)' }}
-              >
-                <span
-                  className="inline-block h-1.5 w-1.5 rounded-full pulse-dot"
-                  style={{ background: 'var(--accent)' }}
-                />
-                Restricted · Pending publication
-              </span>
-            </div>
-          </div>
-          <div className="rule mb-10" />
-
-          {/* Redacted module grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-t hairline-strong">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <RedactedModule key={i} n={String(i + 1).padStart(2, '0')} />
-            ))}
-          </div>
-
-          {/* High-level flow (not sensitive) */}
-          <div className="mt-8 max-w-3xl">
-            <p
-              className="text-base md:text-lg leading-relaxed"
-              style={{ color: 'var(--muted)' }}
+          <a
+            href={BRIEF_MAILTO}
+            className="group inline-flex items-baseline gap-3 border-b hairline-strong pb-2 hover:border-[var(--accent)] transition-colors max-w-full"
+            style={{ borderColor: 'var(--line-strong)' }}
+          >
+            <span
+              className="font-mono text-[11px] uppercase tracking-widest2 shrink-0"
+              style={{ color: 'var(--accent)' }}
             >
-              Framework scope ·{' '}
-              <span style={{ color: 'var(--fg)' }}>
-                Ingestion → Anomaly detection → Root-cause isolation →
-                Prognostic forecasting → Autonomous lifecycle disposition
+              ▸
+            </span>
+            <span
+              className="font-display italic leading-none break-words"
+              style={{
+                fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+                color: 'var(--fg)',
+              }}
+            >
+              Request research brief{' '}
+              <span className="inline-block transition-transform group-hover:translate-x-1">
+                →
               </span>
-              , with a fleet-aggregation layer above.{' '}
-              <span style={{ color: 'var(--faint)' }}>
-                Specifics — models, training corpora, compute envelope, and
-                failure-mode coverage — are withheld pending publication and
-                partner review.
-              </span>
-            </p>
+            </span>
+          </a>
+          <div
+            className="mt-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest2 flex-wrap"
+            style={{ color: 'var(--faint)' }}
+          >
+            <span className="flex items-center gap-1.5">
+              <span
+                className="inline-block h-1.5 w-1.5 rounded-full pulse-dot"
+                style={{ background: 'var(--accent)' }}
+              />
+              <span style={{ color: 'var(--fg)' }}>Active R&D</span>
+            </span>
+            <span className="opacity-40">/</span>
+            <span>Pending publication</span>
+            <span className="opacity-40">/</span>
+            <span>NDA available</span>
           </div>
         </motion.div>
 
-        {/* Validation status + CTA */}
+        {/* Expand toggle — reveals gaps + architecture + detailed validation */}
         <motion.div
           {...inView}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 border-t hairline-strong"
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="mt-10"
         >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-10">
-            <div className="md:col-span-4">
-              <div
-                className="font-mono text-[11px] uppercase tracking-widest2 mb-3"
-                style={{ color: 'var(--faint)' }}
-              >
-                Validation
-              </div>
-              <div
-                className="font-display italic text-2xl md:text-[26px] leading-tight"
-                style={{ color: 'var(--fg)' }}
-              >
-                Active R&D.
-                <br />
-                <span style={{ color: 'var(--muted)' }}>
-                  Benchmarks in progress.
-                </span>
-              </div>
-            </div>
-            <div className="md:col-span-5">
-              <p
-                className="text-sm md:text-base leading-relaxed"
-                style={{ color: 'var(--muted)' }}
-              >
-                Validation is underway against{' '}
-                <span style={{ color: 'var(--fg)' }}>
-                  NASA SMAP and MSL
-                </span>{' '}
-                labeled-anomaly telemetry, with terrestrial generalization
-                tested against the Ferronyx robotic-fleet corpus. Physics-based
-                fault-injection simulation covers documented spacecraft failure
-                modes beyond the available labeled set.
-              </p>
-            </div>
-            <div className="md:col-span-3 md:text-right">
-              <a
-                href="mailto:haarvish@gmail.com?subject=SORA%20research%20brief%20request&body=Name%3A%20%0AAffiliation%3A%20%0AContext%20%2F%20research%20interest%3A%20%0A%0A%28Optional%3A%20describe%20specific%20modules%20or%20results%20of%20interest%29"
-                className="group inline-flex flex-col items-start md:items-end gap-2 transition-opacity"
-              >
-                <span
-                  className="font-mono text-[11px] uppercase tracking-widest2"
-                  style={{ color: 'var(--faint)' }}
-                >
-                  For qualified partners
-                </span>
-                <span
-                  className="font-display italic text-2xl leading-tight"
-                  style={{ color: 'var(--accent)' }}
-                >
-                  Request research brief{' '}
-                  <span className="inline-block transition-transform group-hover:translate-x-0.5">
-                    →
-                  </span>
-                </span>
-                <span
-                  className="font-mono text-[10px] uppercase tracking-widest2"
-                  style={{ color: 'var(--muted)' }}
-                >
-                  haarvish@gmail.com · NDA available
-                </span>
-              </a>
-            </div>
-          </div>
+          <button
+            type="button"
+            onClick={() => setExpanded((e) => !e)}
+            aria-expanded={expanded}
+            className="group inline-flex items-center gap-3 py-3 px-5 border hairline-strong hover:bg-[var(--card-hover)] transition-colors font-mono text-[11px] uppercase tracking-widest2"
+            style={{ color: 'var(--fg)' }}
+          >
+            <span
+              className="inline-block h-1.5 w-1.5 rounded-full"
+              style={{ background: 'var(--accent)' }}
+            />
+            <span>
+              {expanded
+                ? 'Collapse framework overview'
+                : 'Read framework overview'}
+            </span>
+            <span
+              className="transition-transform duration-300"
+              style={{
+                transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                color: 'var(--muted)',
+              }}
+            >
+              ↓
+            </span>
+          </button>
         </motion.div>
+
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="sora-detail"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.55, ease: EXPAND_EASE }}
+              style={{ overflow: 'hidden' }}
+            >
+              {/* Dual-gap framing */}
+              <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-0 border-y hairline-strong">
+                <Gap
+                  n="G.01"
+                  title="The limits of static FDIR"
+                  body="Modern spacecraft health management is rule-based — hand-authored fault trees and threshold checks. Brittle across novel fault modes. Unable to correlate across subsystems. At 20-minute deep-space latency, undetected cascading failure means mission loss."
+                />
+                <Gap
+                  n="G.02"
+                  title="The end-of-life gap"
+                  bordered
+                  body="14,000+ active satellites, most without onboard end-of-life actuation intelligence. A 10,000-vehicle constellation without self-disposal needs 10,000 dedicated removal spacecraft — compounding the debris problem during the removal itself."
+                />
+              </div>
+
+              {/* Architecture — redacted */}
+              <div className="mt-20">
+                <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
+                  <h3
+                    className="font-display italic text-4xl md:text-5xl"
+                    style={{ color: 'var(--fg)' }}
+                  >
+                    Architecture
+                  </h3>
+                  <span
+                    className="flex items-center gap-2 px-2 py-0.5 border font-mono text-[11px] uppercase tracking-widest2"
+                    style={{
+                      color: 'var(--accent)',
+                      borderColor: 'var(--accent-dim)',
+                    }}
+                  >
+                    <span
+                      className="inline-block h-1.5 w-1.5 rounded-full pulse-dot"
+                      style={{ background: 'var(--accent)' }}
+                    />
+                    Restricted · Pending publication
+                  </span>
+                </div>
+                <div className="rule mb-10" />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-t hairline-strong">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <RedactedModule
+                      key={i}
+                      n={String(i + 1).padStart(2, '0')}
+                    />
+                  ))}
+                </div>
+
+                <div className="mt-8 max-w-3xl">
+                  <p
+                    className="text-base md:text-lg leading-relaxed"
+                    style={{ color: 'var(--muted)' }}
+                  >
+                    Framework scope ·{' '}
+                    <span style={{ color: 'var(--fg)' }}>
+                      Ingestion → Anomaly detection → Root-cause isolation →
+                      Prognostic forecasting → Autonomous lifecycle
+                      disposition
+                    </span>
+                    , with a fleet-aggregation layer above.{' '}
+                    <span style={{ color: 'var(--faint)' }}>
+                      Specifics — models, training corpora, compute envelope,
+                      and failure-mode coverage — are withheld pending
+                      publication and partner review.
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Detailed validation paragraph */}
+              <div className="mt-16 border-t hairline-strong pt-10 grid grid-cols-1 md:grid-cols-12 gap-8">
+                <div className="md:col-span-3">
+                  <div
+                    className="font-mono text-[11px] uppercase tracking-widest2 mb-2"
+                    style={{ color: 'var(--faint)' }}
+                  >
+                    Validation
+                  </div>
+                </div>
+                <div className="md:col-span-9 max-w-3xl">
+                  <p
+                    className="text-[15px] md:text-base leading-relaxed"
+                    style={{ color: 'var(--muted)' }}
+                  >
+                    Validation is underway against{' '}
+                    <span style={{ color: 'var(--fg)' }}>
+                      NASA SMAP and MSL
+                    </span>{' '}
+                    labeled-anomaly telemetry, with terrestrial generalization
+                    tested against the Ferronyx robotic-fleet corpus.
+                    Physics-based fault-injection simulation covers documented
+                    spacecraft failure modes beyond the available labeled
+                    set.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
