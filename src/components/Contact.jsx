@@ -37,11 +37,11 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative py-28 md:py-36 border-t hairline"
+      className="relative py-20 md:py-36 border-t hairline"
     >
       <div className="container-edge">
         {/* Eyebrow */}
-        <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest2 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono uppercase tracking-widest2 mb-6">
           <span className="flex items-center gap-3">
             <span style={{ color: 'var(--accent)' }}>[S.05]</span>
             <span style={{ color: 'var(--fg)' }}>Contact</span>
@@ -76,24 +76,24 @@ export default function Contact() {
           <span style={{ color: 'var(--muted)' }}>press &amp; investors.</span>
         </motion.h2>
 
-        {/* Primary email — prominent */}
+        {/* Primary email — prominent, wraps safely on narrow screens */}
         <motion.a
           {...inView}
           transition={{ duration: 0.8, delay: 0.2 }}
           href="mailto:haarvish@gmail.com"
-          className="group mt-14 inline-flex items-baseline gap-4 border-b hairline-strong pb-3 hover:border-[var(--accent)] transition-colors"
+          className="group mt-14 inline-flex items-baseline gap-3 sm:gap-4 border-b hairline-strong pb-3 hover:border-[var(--accent)] transition-colors max-w-full"
           style={{ borderColor: 'var(--line-strong)' }}
         >
           <span
-            className="font-mono text-[11px] uppercase tracking-widest2"
+            className="font-mono text-[11px] uppercase tracking-widest2 shrink-0"
             style={{ color: 'var(--accent)' }}
           >
             ▸
           </span>
           <span
-            className="font-display italic leading-none"
+            className="font-display italic leading-none break-words"
             style={{
-              fontSize: 'clamp(2rem, 5vw, 3.75rem)',
+              fontSize: 'clamp(1.6rem, 5vw, 3.75rem)',
               color: 'var(--fg)',
             }}
           >

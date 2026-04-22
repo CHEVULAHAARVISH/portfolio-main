@@ -17,7 +17,7 @@ export default function Sora() {
   return (
     <section
       id="sora"
-      className="relative py-28 md:py-36 border-t hairline"
+      className="relative py-20 md:py-36 border-t hairline"
     >
       <div className="container-edge relative">
         {/* Spacecraft illustration — upper right, desktop only */}
@@ -32,7 +32,7 @@ export default function Sora() {
         </motion.div>
 
         {/* Eyebrow row */}
-        <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest2 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono uppercase tracking-widest2 mb-6">
           <span className="flex items-center gap-3">
             <span style={{ color: 'var(--accent)' }}>[S.02]</span>
             <span style={{ color: 'var(--fg)' }}>SORA</span>
@@ -49,8 +49,8 @@ export default function Sora() {
               />
               <span style={{ color: 'var(--fg)' }}>Restricted</span>
             </span>
-            <span className="opacity-40">/</span>
-            <span>Pending publication</span>
+            <span className="opacity-40 hidden sm:inline">/</span>
+            <span className="hidden sm:inline">Pending publication</span>
           </span>
         </div>
         <div className="rule mb-14" />
@@ -131,7 +131,7 @@ export default function Sora() {
             <span
               className="font-display italic leading-none break-words"
               style={{
-                fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+                fontSize: 'clamp(1.4rem, 4vw, 3rem)',
                 color: 'var(--fg)',
               }}
             >
