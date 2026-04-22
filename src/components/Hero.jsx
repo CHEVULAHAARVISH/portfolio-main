@@ -41,26 +41,37 @@ export default function Hero() {
           <div className="rule" />
         </motion.div>
 
-        {/* Name — owns the space */}
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.7 }}
-          className="font-display italic leading-[0.92] tracking-tight"
-          style={{
-            fontSize: 'clamp(4.5rem, 14vw, 12rem)',
-          }}
-        >
-          <OverflowReveal delay={1.75}>
-            <span>Haarvish</span>
-          </OverflowReveal>
-          <OverflowReveal delay={1.9} className="block pl-2 md:pl-16">
-            <span>
-              Chevula
-              <span style={{ color: 'var(--accent)' }}>.</span>
-            </span>
-          </OverflowReveal>
-        </motion.h1>
+        {/* Name + Triangle row — paired editorial block */}
+        <div className="flex items-center justify-between gap-8">
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.7 }}
+            className="flex-1 min-w-0 font-display italic leading-[0.92] tracking-tight"
+            style={{
+              fontSize: 'clamp(4.5rem, 14vw, 12rem)',
+            }}
+          >
+            <OverflowReveal delay={1.75}>
+              <span>Haarvish</span>
+            </OverflowReveal>
+            <OverflowReveal delay={1.9} className="block pl-2 md:pl-16">
+              <span>
+                Chevula
+                <span style={{ color: 'var(--accent)' }}>.</span>
+              </span>
+            </OverflowReveal>
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 0.9, scale: 1 }}
+            transition={{ duration: 1.1, ease: EASE, delay: 2.2 }}
+            className="hidden md:block shrink-0 w-[300px] lg:w-[380px] xl:w-[460px]"
+          >
+            <Triangle />
+          </motion.div>
+        </div>
 
         {/* Thesis paragraph — the one descriptor */}
         <motion.p
@@ -178,16 +189,6 @@ function BlueprintBackdrop() {
       <CornerMark className="top-6 right-6" flipX />
       <CornerMark className="bottom-6 left-6" flipY />
       <CornerMark className="bottom-6 right-6" flipX flipY />
-
-      {/* Triangle — three-domain thesis diagram, fades in after name reveal */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 0.9, scale: 1 }}
-        transition={{ duration: 1.1, ease: EASE, delay: 2.2 }}
-        className="absolute right-[-2%] top-1/2 -translate-y-1/2 w-[460px] xl:w-[540px] hidden md:block"
-      >
-        <Triangle />
-      </motion.div>
     </div>
   );
 }
