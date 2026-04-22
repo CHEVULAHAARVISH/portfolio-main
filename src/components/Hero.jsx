@@ -8,8 +8,7 @@ export default function Hero() {
       id="identity"
       className="relative min-h-[92vh] pt-20 pb-28 overflow-hidden"
     >
-      {/* Ambient orbital SVG */}
-      <OrbitalBackdrop />
+      <BlueprintBackdrop />
 
       <div className="container-edge relative z-10">
         {/* Eyebrow row */}
@@ -22,134 +21,110 @@ export default function Hero() {
         >
           <span className="flex items-center gap-3">
             <span style={{ color: 'var(--accent)' }}>[S.00]</span>
-            <span>Identity</span>
+            <span>Identity · Engineering Brief</span>
           </span>
           <span className="flex items-center gap-3">
-            <span className="hidden sm:inline">Portfolio · v2.0</span>
+            <span className="hidden sm:inline">Rev · 2.0</span>
             <span className="opacity-40">/</span>
-            <span>Est. 2026</span>
+            <span>Updated {new Date().getFullYear()}</span>
           </span>
         </motion.div>
 
-        {/* Hairline */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.2, ease: EASE, delay: 1.6 }}
           style={{ originX: 0 }}
-          className="mt-3 mb-16 h-px"
+          className="mt-3 mb-20 h-px"
         >
           <div className="rule" />
         </motion.div>
 
-        {/* Name block */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10">
-          <div>
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.7 }}
-              className="font-display italic leading-[0.92] tracking-tight"
-              style={{
-                fontSize: 'clamp(4.2rem, 13vw, 11rem)',
-              }}
-            >
-              <OverflowReveal delay={1.75}>
-                <span>Haarvish</span>
-              </OverflowReveal>
-              <OverflowReveal delay={1.9} className="block pl-2 md:pl-16">
-                <span>
-                  Chevula
-                  <span style={{ color: 'var(--accent)' }}>.</span>
-                </span>
-              </OverflowReveal>
-            </motion.h1>
-          </div>
+        {/* Name — owns the space */}
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.7 }}
+          className="font-display italic leading-[0.92] tracking-tight"
+          style={{
+            fontSize: 'clamp(4.5rem, 14vw, 12rem)',
+          }}
+        >
+          <OverflowReveal delay={1.75}>
+            <span>Haarvish</span>
+          </OverflowReveal>
+          <OverflowReveal delay={1.9} className="block pl-2 md:pl-16">
+            <span>
+              Chevula
+              <span style={{ color: 'var(--accent)' }}>.</span>
+            </span>
+          </OverflowReveal>
+        </motion.h1>
 
-          {/* Right side meta block */}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 2.3 }}
-            className="md:max-w-[320px] md:pb-3 md:text-right"
-          >
-            <div
-              className="font-mono text-[11px] uppercase tracking-widest2 mb-3"
-              style={{ color: 'var(--faint)' }}
-            >
-              Status / <span style={{ color: 'var(--fg)' }}>Operational</span>
-            </div>
-            <div
-              className="font-display italic text-2xl md:text-[28px] leading-tight"
-              style={{ color: 'var(--fg)' }}
-            >
-              Engineering the
-              <br />
-              intelligence layer
-              <br />
-              for autonomous
-              <br />
-              <span style={{ color: 'var(--accent)' }}>systems</span>.
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Thesis paragraph */}
+        {/* Thesis paragraph — the one descriptor */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 2.5 }}
-          className="mt-16 md:mt-20 max-w-3xl text-lg md:text-xl leading-relaxed"
+          transition={{ duration: 0.8, ease: EASE, delay: 2.3 }}
+          className="mt-14 md:mt-16 max-w-3xl text-lg md:text-xl leading-relaxed"
           style={{ color: 'var(--muted)' }}
         >
-          Autonomous observability and runtime autonomy — on the ground, in the
-          field, and in orbit. I build the systems that let machines reason
-          about their own health, isolate their own faults, and decide their own
-          end-of-life without waiting for a human on the other end of a
-          20-minute link.
+          I build{' '}
+          <span style={{ color: 'var(--fg)' }}>runtime intelligence</span> for
+          autonomous systems — the observability, reasoning, and recovery
+          layers that let machines run themselves when the operator can't
+          answer in time. On servers. On robots. In orbit.
         </motion.p>
 
-        {/* Role trio */}
+        {/* Identity chips — single line, mono, not competing */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 2.8 }}
-          className="mt-20 grid grid-cols-1 md:grid-cols-3 border-t hairline-strong"
+          transition={{ duration: 0.8, delay: 2.6 }}
+          className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-[11px] uppercase tracking-widest2"
+          style={{ color: 'var(--muted)' }}
         >
-          <RoleCard
-            index="01"
-            role="Founder"
-            target="Ferronyx"
-            desc="The intelligence layer for robotics. ROS2 observability, AI-assisted root cause, fleet-wide diagnostics."
-          />
-          <RoleCard
-            index="02"
-            role="Researcher"
-            target="SORA"
-            desc="Spacecraft Observability and Runtime Autonomy. Domain-specialized AI for onboard fault reasoning and autonomous disposal."
-          />
-          <RoleCard
-            index="03"
-            role="Engineer"
-            target="Sanas"
-            last
-            desc="Platform-wide performance engineering. Full-stack observability across METL: Metrics · Events · Logs · Traces."
-          />
+          <span className="flex items-center gap-2">
+            <span style={{ color: 'var(--accent)' }}>/01</span>
+            <span style={{ color: 'var(--fg)' }}>Founder</span>
+            <span className="opacity-50">·</span>
+            <span>Ferronyx</span>
+          </span>
+          <span className="opacity-30">|</span>
+          <span className="flex items-center gap-2">
+            <span style={{ color: 'var(--accent)' }}>/02</span>
+            <span style={{ color: 'var(--fg)' }}>Research</span>
+            <span className="opacity-50">·</span>
+            <span>SORA</span>
+          </span>
+          <span className="opacity-30">|</span>
+          <span className="flex items-center gap-2">
+            <span style={{ color: 'var(--accent)' }}>/03</span>
+            <span style={{ color: 'var(--fg)' }}>Engineer</span>
+            <span className="opacity-50">·</span>
+            <span>Sanas</span>
+          </span>
         </motion.div>
 
         {/* Scroll cue */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 3.3 }}
-          className="mt-24 flex items-center gap-3 font-mono text-[11px] uppercase tracking-widest2"
+          transition={{ duration: 1, delay: 3 }}
+          className="mt-28 flex items-center gap-3 font-mono text-[11px] uppercase tracking-widest2"
           style={{ color: 'var(--faint)' }}
         >
           <span
             className="inline-block h-4 w-px"
             style={{ background: 'var(--line-strong)' }}
           />
-          <span>Scroll · S.01 Ferronyx</span>
+          <span>
+            Scroll ·{' '}
+            <span style={{ color: 'var(--muted)' }}>
+              S.01 Ferronyx — S.02 SORA — S.03 Thesis — S.04 Trajectory — S.05
+              Contact
+            </span>
+          </span>
         </motion.div>
       </div>
     </section>
@@ -174,118 +149,95 @@ function OverflowReveal({ children, delay = 0, className = '' }) {
   );
 }
 
-function RoleCard({ index, role, target, desc, last }) {
+function BlueprintBackdrop() {
   return (
-    <div
-      className={`group px-0 md:px-6 py-6 md:py-7 border-b md:border-b-0 hairline-strong ${
-        last ? '' : 'md:border-r'
-      }`}
-    >
-      <div className="flex items-center gap-3 mb-4">
-        <span
-          className="font-mono text-[11px] uppercase tracking-widest2"
-          style={{ color: 'var(--accent)' }}
-        >
-          [{index}]
-        </span>
-        <span
-          className="font-mono text-[11px] uppercase tracking-widest2"
-          style={{ color: 'var(--muted)' }}
-        >
-          {role}
-        </span>
-      </div>
-      <div className="font-display italic text-3xl md:text-[34px] leading-none mb-3">
-        {target}
-      </div>
-      <p
-        className="text-sm leading-relaxed max-w-[36ch]"
-        style={{ color: 'var(--muted)' }}
+    <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+      {/* Fine dot grid — engineering paper */}
+      <div className="absolute inset-0 blueprint-grid opacity-60" />
+
+      {/* Axis lines — like a technical drawing frame */}
+      <svg
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 1000 1000"
+        preserveAspectRatio="none"
       >
-        {desc}
-      </p>
+        <line
+          x1="0"
+          y1="50%"
+          x2="100%"
+          y2="50%"
+          stroke="var(--line)"
+          strokeWidth="1"
+          strokeDasharray="2 6"
+        />
+      </svg>
+
+      {/* Corner marks — technical drawing registration marks */}
+      <CornerMark className="top-6 left-6" />
+      <CornerMark className="top-6 right-6" flipX />
+      <CornerMark className="bottom-6 left-6" flipY />
+      <CornerMark className="bottom-6 right-6" flipX flipY />
+
+      {/* A subtle signal-flow diagram on the right — systems drawing */}
+      <svg
+        className="absolute right-0 top-1/2 -translate-y-1/2 opacity-[0.18] hidden md:block"
+        width="520"
+        height="520"
+        viewBox="0 0 520 520"
+        fill="none"
+      >
+        {/* Three nodes in a triangular flow */}
+        <g stroke="var(--fg)" strokeWidth="1">
+          <circle cx="120" cy="180" r="28" fill="none" />
+          <circle cx="400" cy="180" r="28" fill="none" />
+          <circle cx="260" cy="400" r="28" fill="none" />
+          <path d="M148 180 L372 180" strokeDasharray="2 4" />
+          <path d="M135 205 L250 375" strokeDasharray="2 4" />
+          <path d="M385 205 L270 375" strokeDasharray="2 4" />
+        </g>
+        {/* Accent node */}
+        <circle
+          cx="260"
+          cy="400"
+          r="4"
+          fill="var(--accent)"
+        />
+        {/* Labels */}
+        <g
+          fontFamily="JetBrains Mono, monospace"
+          fontSize="9"
+          letterSpacing="1.5"
+          fill="var(--muted)"
+          textAnchor="middle"
+        >
+          <text x="120" y="145">CLOUD</text>
+          <text x="400" y="145">FIELD</text>
+          <text x="260" y="450">ORBIT</text>
+        </g>
+      </svg>
     </div>
   );
 }
 
-function OrbitalBackdrop() {
+function CornerMark({ className = '', flipX, flipY }) {
+  const transform = [
+    flipX ? 'scaleX(-1)' : '',
+    flipY ? 'scaleY(-1)' : '',
+  ].join(' ');
   return (
-    <div
-      className="absolute inset-0 pointer-events-none"
-      aria-hidden="true"
+    <svg
+      className={`absolute ${className}`}
+      width="22"
+      height="22"
+      viewBox="0 0 22 22"
+      fill="none"
+      style={{ transform }}
     >
-      {/* Outer orbital arc */}
-      <svg
-        className="absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 orbit-slow"
-        width="1400"
-        height="1400"
-        viewBox="0 0 1400 1400"
-        fill="none"
-      >
-        <ellipse
-          cx="700"
-          cy="700"
-          rx="680"
-          ry="320"
-          stroke="var(--line-strong)"
-          strokeWidth="1"
-          strokeDasharray="2 6"
-        />
-        {/* Satellite on the orbit */}
-        <g transform="translate(1380 700)">
-          <circle r="3" fill="var(--accent)" />
-          <circle r="9" fill="none" stroke="var(--accent)" strokeOpacity="0.4" />
-        </g>
-      </svg>
-
-      {/* Inner orbital arc */}
-      <svg
-        className="absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 orbit-fast"
-        width="900"
-        height="900"
-        viewBox="0 0 900 900"
-        fill="none"
-      >
-        <ellipse
-          cx="450"
-          cy="450"
-          rx="430"
-          ry="180"
-          stroke="var(--line)"
-          strokeWidth="1"
-        />
-        <g transform="translate(20 450)">
-          <circle r="2.5" fill="var(--fg)" opacity="0.6" />
-        </g>
-      </svg>
-
-      {/* Faint tick marks at cardinal points (decorative) */}
-      <svg
-        className="absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2"
-        width="1400"
-        height="1400"
-        viewBox="0 0 1400 1400"
-      >
-        {Array.from({ length: 24 }).map((_, i) => {
-          const angle = (i * 360) / 24;
-          const rad = (angle * Math.PI) / 180;
-          const x1 = 700 + Math.cos(rad) * 680;
-          const y1 = 700 + Math.sin(rad) * 320;
-          const x2 = 700 + Math.cos(rad) * 690;
-          const y2 = 700 + Math.sin(rad) * 325;
-          return (
-            <line
-              key={i}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="var(--line-strong)"
-              strokeWidth="1"
-            />
-          );
-        })}
-      </svg>
-    </div>
+      <path
+        d="M1 8 V1 H8"
+        stroke="var(--line-strong)"
+        strokeWidth="1"
+      />
+    </svg>
   );
 }

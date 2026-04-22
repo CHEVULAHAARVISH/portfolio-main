@@ -1,4 +1,5 @@
 import TelemetryBar from './components/TelemetryBar.jsx';
+import SectionRail from './components/SectionRail.jsx';
 import Hero from './components/Hero.jsx';
 import Ferronyx from './components/Ferronyx.jsx';
 import Sora from './components/Sora.jsx';
@@ -14,6 +15,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen">
       <TelemetryBar theme={theme} onToggle={toggle} />
+      <SectionRail />
       <main className="relative z-[3]">
         <Hero />
         <Ferronyx />

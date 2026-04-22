@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-function formatUTC(d) {
+function formatLocal(d) {
   const pad = (n) => String(n).padStart(2, '0');
-  return (
-    `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ` +
-    `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`
-  );
+  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
 export default function TelemetryBar({ theme, onToggle }) {
   const [booted, setBooted] = useState(false);
   const [stage, setStage] = useState(0);
   const [now, setNow] = useState(() => new Date());
+  const [packets, setPackets] = useState(41827);
+  const packetsRef = useRef(packets);
 
   useEffect(() => {
     const timers = [
@@ -31,15 +30,31 @@ export default function TelemetryBar({ theme, onToggle }) {
     return () => clearInterval(id);
   }, []);
 
+  // Ambient packet counter — advances at irregular intervals for "live"
+  useEffect(() => {
+    if (!booted) return;
+    let raf;
+    let last = performance.now();
+    const loop = (t) => {
+      if (t - last > 120 + Math.random() * 180) {
+        last = t;
+        packetsRef.current += 1 + Math.floor(Math.random() * 3);
+        setPackets(packetsRef.current);
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [booted]);
+
   return (
     <div
       className="sticky top-0 z-50 w-full border-b backdrop-blur-md"
       style={{
         borderColor: 'var(--line)',
-        background:
-          'color-mix(in srgb, var(--bg) 78%, transparent)',
+        background: 'color-mix(in srgb, var(--bg) 78%, transparent)',
       }}
-      aria-label="Live telemetry bar"
+      aria-label="Runtime console"
     >
       <div className="container-edge flex items-center justify-between gap-4 py-2 text-[11px] font-mono">
         {/* Left cluster */}
@@ -54,7 +69,7 @@ export default function TelemetryBar({ theme, onToggle }) {
                 className="uppercase tracking-widest2"
                 style={{ color: 'var(--accent)' }}
               >
-                [BOOT<span className="blink">▮</span>] TELEMETRY INITIALIZING
+                [BOOT<span className="blink">▮</span>] RUNTIME INITIALIZING
               </motion.span>
             )}
           </AnimatePresence>
@@ -65,24 +80,17 @@ export default function TelemetryBar({ theme, onToggle }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="uppercase tracking-widest2"
-                style={{ color: 'var(--muted)' }}
               >
-                <span style={{ color: 'var(--fg)' }}>H.C</span>
+                <span style={{ color: 'var(--muted)' }}>NODE</span>
                 <span className="opacity-40 mx-2">/</span>
-                OBSERVATORY
+                <span style={{ color: 'var(--fg)' }}>HC-01</span>
               </motion.span>
 
               <span
-                className="hidden md:inline uppercase tracking-widest2"
+                className="hidden md:inline uppercase tracking-widest2 tabular-nums"
                 style={{ color: 'var(--muted)' }}
               >
-                12.9716° N · 77.5946° E
-              </span>
-              <span
-                className="hidden lg:inline uppercase tracking-widest2"
-                style={{ color: 'var(--faint)' }}
-              >
-                BENGALURU / IN
+                SIG <span style={{ color: 'var(--fg)' }}>#{packets.toLocaleString()}</span>
               </span>
             </>
           )}
@@ -93,10 +101,11 @@ export default function TelemetryBar({ theme, onToggle }) {
           {booted && (
             <>
               <span
-                className="hidden sm:inline uppercase tracking-widest2"
+                className="hidden sm:inline uppercase tracking-widest2 tabular-nums"
                 style={{ color: 'var(--muted)' }}
               >
-                {formatUTC(now)}
+                BLR · {formatLocal(now)}{' '}
+                <span style={{ color: 'var(--faint)' }}>IST</span>
               </span>
 
               <span className="hidden md:flex items-center gap-1.5 uppercase tracking-widest2">
@@ -104,7 +113,7 @@ export default function TelemetryBar({ theme, onToggle }) {
                   className="inline-block h-1.5 w-1.5 rounded-full pulse-dot"
                   style={{ background: 'var(--accent)' }}
                 />
-                <span style={{ color: 'var(--fg)' }}>FERRONYX</span>
+                <span style={{ color: 'var(--fg)' }}>Ferronyx</span>
                 <span style={{ color: 'var(--faint)' }}>LIVE</span>
               </span>
 
@@ -131,7 +140,6 @@ export default function TelemetryBar({ theme, onToggle }) {
         </div>
       </div>
 
-      {/* Hair-fine progress strip during boot */}
       <div
         className="h-[1px] w-full origin-left"
         style={{

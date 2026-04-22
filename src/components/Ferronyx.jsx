@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 const inView = {
   initial: { opacity: 0, y: 20 },
@@ -234,19 +235,23 @@ function Capability({ n, title, body, last }) {
   );
 }
 
-/* ---------- Terminal mock ---------- */
+/* ---------- Terminal mock (animated) ---------- */
+const TERMINAL_LINES = [
+  { t: '/agv_047/cmd_vel', s: 'OK', meta: 'latency 3ms · 50Hz' },
+  { t: '/agv_047/lidar/scan', s: 'OK', meta: '12.1 Hz · 0 drops' },
+  { t: '/agv_047/tf', s: 'OK', meta: 'chain complete · 1.2ms' },
+  { t: '/agv_047/localization', s: 'OK', meta: 'drift < 0.02 m' },
+  { t: '/agv_047/battery', s: 'WARN', meta: '17% · cell Δ detected' },
+  { t: '/agv_047/camera_front', s: 'OK', meta: '30 fps · hw-enc' },
+];
+
 function TerminalMock() {
-  const lines = [
-    { t: '/agv_047/cmd_vel', s: 'OK', meta: 'latency 3ms · 50Hz' },
-    { t: '/agv_047/lidar/scan', s: 'OK', meta: '12.1 Hz · 0 drops' },
-    { t: '/agv_047/tf', s: 'OK', meta: 'chain complete · 1.2ms' },
-    { t: '/agv_047/localization', s: 'OK', meta: 'drift < 0.02 m' },
-    { t: '/agv_047/battery', s: 'WARN', meta: '17% · cell Δ detected' },
-    { t: '/agv_047/camera_front', s: 'OK', meta: '30 fps · hw-enc' },
-  ];
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-15% 0px' });
 
   return (
     <div
+      ref={ref}
       className="relative rounded-sm border hairline-strong overflow-hidden"
       style={{ background: 'var(--card)' }}
     >
@@ -271,72 +276,138 @@ function TerminalMock() {
           className="font-mono text-[10px] uppercase tracking-widest2"
           style={{ color: 'var(--faint)' }}
         >
-          ferronyx / observatory
+          ferronyx / runtime
         </span>
       </div>
 
-      {/* Topic rows */}
-      <div className="font-mono text-[12px] md:text-[13px] px-4 py-4">
-        {lines.map((l, i) => (
+      {/* Topic rows — streamed in */}
+      <div className="font-mono text-[12px] md:text-[13px] px-4 py-4 min-h-[320px]">
+        <motion.div
+          variants={{
+            hidden: {},
+            show: {
+              transition: { staggerChildren: 0.18, delayChildren: 0.2 },
+            },
+          }}
+          initial="hidden"
+          animate={isInView ? 'show' : 'hidden'}
+        >
+          {TERMINAL_LINES.map((l, i) => (
+            <TerminalRow key={i} line={l} />
+          ))}
+        </motion.div>
+
+        {/* Separator + AI-RCA — appears after rows */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.2 + TERMINAL_LINES.length * 0.18 + 0.25,
+          }}
+        >
           <div
-            key={i}
-            className="grid grid-cols-[auto_1fr_auto] gap-4 py-1.5"
-            style={{ color: 'var(--fg)' }}
-          >
+            className="my-3"
+            style={{ borderTop: '1px dashed var(--line-strong)' }}
+          />
+
+          <div className="flex items-start gap-3">
             <span
-              className={l.s === 'OK' ? '' : ''}
+              className="font-mono text-[10px] uppercase tracking-widest2 mt-0.5 px-1.5 py-0.5"
               style={{
-                color: l.s === 'OK' ? 'var(--muted)' : 'var(--accent)',
+                background: 'var(--accent-dim)',
+                color: 'var(--accent)',
               }}
             >
-              [{l.s}]
+              AI-RCA
             </span>
-            <span className="truncate">{l.t}</span>
-            <span style={{ color: 'var(--faint)' }} className="hidden sm:inline">
-              {l.meta}
-            </span>
-          </div>
-        ))}
-
-        {/* Separator */}
-        <div
-          className="my-3"
-          style={{ borderTop: '1px dashed var(--line-strong)' }}
-        />
-
-        {/* AI-RCA block */}
-        <div className="flex items-start gap-3">
-          <span
-            className="font-mono text-[10px] uppercase tracking-widest2 mt-0.5 px-1.5 py-0.5"
-            style={{
-              background: 'var(--accent-dim)',
-              color: 'var(--accent)',
-            }}
-          >
-            AI-RCA
-          </span>
-          <div>
-            <div style={{ color: 'var(--fg)' }}>
-              Root cause <span style={{ color: 'var(--accent)' }}>battery</span>{' '}
-              cell-3 degradation (confidence 0.92).
-            </div>
-            <div style={{ color: 'var(--muted)' }}>
-              Correlation across /battery/voltage, /temp/core and discharge
-              curve since 14:22 UTC.
-            </div>
-            <div className="mt-2 flex items-center gap-2">
-              <span style={{ color: 'var(--accent)' }}>▸</span>
-              <span>
-                Suggest: isolate AGV-047, dispatch replacement pack, schedule
-                teardown.
-              </span>
-              <span className="blink" style={{ color: 'var(--accent)' }}>
-                ▮
-              </span>
+            <div>
+              <TypeLine
+                trigger={isInView}
+                delay={0.2 + TERMINAL_LINES.length * 0.18 + 0.45}
+              >
+                <div style={{ color: 'var(--fg)' }}>
+                  Root cause{' '}
+                  <span style={{ color: 'var(--accent)' }}>battery</span>{' '}
+                  cell-3 degradation (confidence 0.92).
+                </div>
+              </TypeLine>
+              <TypeLine
+                trigger={isInView}
+                delay={0.2 + TERMINAL_LINES.length * 0.18 + 0.95}
+              >
+                <div style={{ color: 'var(--muted)' }}>
+                  Correlation across /battery/voltage, /temp/core and
+                  discharge curve since T−00:17.
+                </div>
+              </TypeLine>
+              <TypeLine
+                trigger={isInView}
+                delay={0.2 + TERMINAL_LINES.length * 0.18 + 1.45}
+              >
+                <div className="mt-2 flex items-center gap-2">
+                  <span style={{ color: 'var(--accent)' }}>▸</span>
+                  <span>
+                    Suggest: isolate AGV-047, dispatch replacement pack,
+                    schedule teardown.
+                  </span>
+                  <span className="blink" style={{ color: 'var(--accent)' }}>
+                    ▮
+                  </span>
+                </div>
+              </TypeLine>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
+  );
+}
+
+function TerminalRow({ line }) {
+  const isWarn = line.s !== 'OK';
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, x: -6 },
+        show: { opacity: 1, x: 0 },
+      }}
+      transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
+      className="grid grid-cols-[auto_1fr_auto] gap-4 py-1.5 items-baseline"
+      style={{ color: 'var(--fg)' }}
+    >
+      {isWarn ? (
+        <motion.span
+          initial={{ background: 'var(--accent-dim)' }}
+          animate={{ background: 'rgba(0,0,0,0)' }}
+          transition={{ duration: 1.6, delay: 0.05 }}
+          className="px-1 -mx-1"
+          style={{ color: 'var(--accent)' }}
+        >
+          [{line.s}]
+        </motion.span>
+      ) : (
+        <span style={{ color: 'var(--muted)' }}>[{line.s}]</span>
+      )}
+      <span className="truncate">{line.t}</span>
+      <span
+        style={{ color: 'var(--faint)' }}
+        className="hidden sm:inline"
+      >
+        {line.meta}
+      </span>
+    </motion.div>
+  );
+}
+
+function TypeLine({ children, trigger, delay }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 3 }}
+      animate={trigger ? { opacity: 1, y: 0 } : { opacity: 0, y: 3 }}
+      transition={{ duration: 0.35, delay }}
+    >
+      {children}
+    </motion.div>
   );
 }

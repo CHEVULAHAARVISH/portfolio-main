@@ -6,6 +6,36 @@ const inView = {
   viewport: { once: true, margin: '-10% 0px' },
 };
 
+const domains = [
+  {
+    id: 'D.01',
+    name: 'Servers',
+    env: 'Data center · cloud',
+    stakes: 'Latency and revenue',
+    constraint: 'Millisecond-level SLO under peak load',
+    anchor: ['Sanas', 'Temperstack'],
+  },
+  {
+    id: 'D.02',
+    name: 'Robots',
+    env: 'Field · autonomous',
+    stakes: 'Uptime and physical safety',
+    constraint: 'Remote triage, no field tech on hand',
+    anchor: ['Ferronyx'],
+    flagship: true,
+  },
+  {
+    id: 'D.03',
+    name: 'Spacecraft',
+    env: 'Orbital · no human loop',
+    stakes: 'Mission loss, orbital commons',
+    constraint: '20-min link, sub-watt compute',
+    anchor: ['SORA'],
+  },
+];
+
+const pipeline = ['Ingest', 'Detect', 'Isolate', 'Forecast', 'Act'];
+
 export default function Thesis() {
   return (
     <section
@@ -21,7 +51,7 @@ export default function Thesis() {
             <span style={{ color: 'var(--faint)' }}>· The throughline</span>
           </span>
           <span style={{ color: 'var(--faint)' }}>
-            One problem at three altitudes
+            Same shape · three environments
           </span>
         </div>
         <div className="rule mb-16" />
@@ -41,24 +71,52 @@ export default function Thesis() {
           >
             Observability and{' '}
             <span style={{ color: 'var(--accent)' }}>runtime autonomy</span>{' '}
-            aren't three different problems at three different altitudes —
-            they're the same problem in progressively harsher conditions.
+            aren't three different problems — they're the same problem in
+            progressively harsher conditions.
           </p>
         </motion.div>
 
-        {/* Altitude diagram */}
+        {/* Three co-equal domain panels */}
         <motion.div
           {...inView}
-          transition={{ duration: 0.9, delay: 0.25 }}
-          className="mt-24"
+          transition={{ duration: 0.9, delay: 0.2 }}
+          className="mt-20 border-t border-b hairline-strong"
         >
-          <AltitudeDiagram />
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            {domains.map((d, i) => (
+              <DomainPanel key={d.id} d={d} last={i === domains.length - 1} />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Shared pipeline strip — the punchline */}
+        <motion.div
+          {...inView}
+          transition={{ duration: 0.9, delay: 0.35 }}
+          className="mt-14"
+        >
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <span
+              className="font-mono text-[11px] uppercase tracking-widest2"
+              style={{ color: 'var(--faint)' }}
+            >
+              Shared runtime pipeline · runs in every environment
+            </span>
+            <span
+              className="font-mono text-[11px] uppercase tracking-widest2"
+              style={{ color: 'var(--muted)' }}
+            >
+              5 stages
+            </span>
+          </div>
+
+          <PipelineStrip />
         </motion.div>
 
         {/* Closing manifesto */}
         <motion.div
           {...inView}
-          transition={{ duration: 0.9, delay: 0.35 }}
+          transition={{ duration: 0.9, delay: 0.45 }}
           className="mt-24 grid grid-cols-1 md:grid-cols-12 gap-8"
         >
           <div className="md:col-span-3">
@@ -74,26 +132,12 @@ export default function Thesis() {
               className="text-lg md:text-xl leading-relaxed"
               style={{ color: 'var(--muted)' }}
             >
-              At the server tier the stakes are{' '}
-              <span style={{ color: 'var(--fg)' }}>latency and revenue</span>.
-              At the robot tier they're{' '}
-              <span style={{ color: 'var(--fg)' }}>
-                uptime and physical safety
-              </span>
-              . At the spacecraft tier they're{' '}
-              <span style={{ color: 'var(--fg)' }}>mission loss</span> and an
-              orbital commons that cannot be cleaned up after the fact.
-            </p>
-            <p
-              className="mt-6 text-lg md:text-xl leading-relaxed"
-              style={{ color: 'var(--muted)' }}
-            >
-              The engineering is the same shape at every altitude: ingest
-              heterogeneous telemetry, detect the anomaly, isolate the root
-              cause, forecast degradation, act autonomously when a human can't
-              respond in time. The difference is that each rung up strips away
-              another thing you were relying on — a pager, a field tech, a
-              ground link.
+              The engineering is the same shape at every environment:
+              ingest heterogeneous telemetry, detect the anomaly, isolate
+              the root cause, forecast degradation, act autonomously when a
+              human can't respond in time. The difference is that each rung
+              strips away another thing you were relying on — a pager, a
+              field tech, a ground link.
             </p>
             <p
               className="mt-6 text-lg md:text-xl leading-relaxed"
@@ -108,110 +152,129 @@ export default function Thesis() {
   );
 }
 
-function AltitudeDiagram() {
-  const tiers = [
-    {
-      alt: '0 km',
-      name: 'Servers',
-      tag: 'Cloud',
-      body: 'Performance, reliability, recovery. METL observability. AI-driven incident response.',
-      anchors: ['Sanas', 'Temperstack'],
-    },
-    {
-      alt: '~ m — km',
-      name: 'Robots',
-      tag: 'Field',
-      body: 'ROS2 telemetry, cross-node RCA, fleet-wide health. MTTR measured in minutes.',
-      anchors: ['Ferronyx'],
-      flagship: true,
-    },
-    {
-      alt: '> 400 km',
-      name: 'Spacecraft',
-      tag: 'Orbit',
-      body: 'Onboard anomaly reasoning. Autonomous disposal. Domain-locked AI under 50MB.',
-      anchors: ['SORA'],
-    },
-  ];
-
+function DomainPanel({ d, last }) {
   return (
     <div
-      className="relative border-t border-b hairline-strong"
-      aria-label="Altitude progression from servers to orbit"
+      className={`relative p-8 md:p-10 ${
+        last ? '' : 'md:border-r border-b md:border-b-0 hairline-strong'
+      }`}
+      style={{
+        background: d.flagship ? 'var(--card)' : 'transparent',
+      }}
     >
-      {/* Background strata lines */}
+      <div className="flex items-center justify-between mb-5">
+        <span
+          className="font-mono text-[11px] uppercase tracking-widest2"
+          style={{ color: d.flagship ? 'var(--accent)' : 'var(--faint)' }}
+        >
+          {d.id}
+        </span>
+        {d.flagship && (
+          <span
+            className="font-mono text-[10px] uppercase tracking-widest2 px-2 py-0.5 border"
+            style={{ color: 'var(--accent)', borderColor: 'var(--accent-dim)' }}
+          >
+            Flagship
+          </span>
+        )}
+      </div>
+      <h4
+        className="font-display italic text-4xl md:text-5xl leading-none mb-2"
+        style={{ color: d.flagship ? 'var(--accent)' : 'var(--fg)' }}
+      >
+        {d.name}
+      </h4>
       <div
-        className="absolute inset-x-0 top-1/2 h-px"
-        style={{ background: 'var(--line)' }}
-      />
-      <div
-        className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px origin-left"
-        style={{
-          background:
-            'linear-gradient(to right, var(--accent) 0%, var(--accent) 100%)',
-          opacity: 0.3,
-        }}
-      />
+        className="font-mono text-[11px] uppercase tracking-widest2 mb-6"
+        style={{ color: 'var(--faint)' }}
+      >
+        {d.env}
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 relative">
-        {tiers.map((t, i) => (
-          <div
-            key={t.name}
-            className={`relative p-8 md:p-10 ${
-              i === 0 ? '' : 'md:border-l hairline-strong'
-            } ${i !== tiers.length - 1 ? 'border-b md:border-b-0 hairline-strong' : ''}`}
+      <DomainFact label="Stakes" value={d.stakes} />
+      <DomainFact label="Hard part" value={d.constraint} />
+
+      <div className="mt-6 flex flex-wrap gap-1.5">
+        {d.anchor.map((a) => (
+          <span
+            key={a}
+            className="font-mono text-[10px] uppercase tracking-widest2 px-1.5 py-0.5 border hairline-strong"
+            style={{ color: 'var(--fg)' }}
+          >
+            {a}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DomainFact({ label, value }) {
+  return (
+    <div className="mb-4">
+      <div
+        className="font-mono text-[10px] uppercase tracking-widest2 mb-1"
+        style={{ color: 'var(--faint)' }}
+      >
+        {label}
+      </div>
+      <div className="text-[15px] leading-snug" style={{ color: 'var(--fg)' }}>
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function PipelineStrip() {
+  return (
+    <div
+      className="relative rounded-sm border hairline-strong"
+      style={{ background: 'var(--card)' }}
+    >
+      <div className="grid grid-cols-5 divide-x hairline-strong">
+        {pipeline.map((stage, i) => (
+          <motion.div
+            key={stage}
+            initial={{ opacity: 0, y: 6 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-15% 0px' }}
+            transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
+            className="relative p-4 md:p-5 text-center"
           >
             <div
-              className="font-mono text-[11px] uppercase tracking-widest2 mb-3"
+              className="font-mono text-[10px] uppercase tracking-widest2 mb-2"
               style={{ color: 'var(--faint)' }}
             >
-              <span style={{ color: 'var(--accent)' }}>{t.tag}</span>{' '}
-              <span className="mx-1 opacity-40">/</span> Alt {t.alt}
+              P.0{i + 1}
             </div>
-            <h4
-              className="font-display italic text-4xl md:text-5xl leading-none mb-5"
-              style={{ color: t.flagship ? 'var(--accent)' : 'var(--fg)' }}
+            <div
+              className="font-display italic text-xl md:text-2xl"
+              style={{ color: 'var(--fg)' }}
             >
-              {t.name}
-            </h4>
-            <p
-              className="text-sm leading-relaxed mb-5 max-w-[36ch]"
-              style={{ color: 'var(--muted)' }}
-            >
-              {t.body}
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {t.anchors.map((a) => (
-                <span
-                  key={a}
-                  className="font-mono text-[10px] uppercase tracking-widest2 px-1.5 py-0.5 border hairline-strong"
-                  style={{ color: 'var(--fg)' }}
-                >
-                  {a}
-                </span>
-              ))}
+              {stage}
             </div>
 
-            {/* Tier marker node on the centerline */}
-            <div
-              className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-4 w-4 rounded-full"
-              style={{
-                background: 'var(--bg)',
-                border: `1px solid ${
-                  t.flagship
-                    ? 'var(--accent)'
-                    : 'var(--line-strong)'
-                }`,
-              }}
-            >
-              <span
-                className="h-1.5 w-1.5 rounded-full"
-                style={{
-                  background: t.flagship ? 'var(--accent)' : 'var(--fg)',
-                }}
-              />
-            </div>
-          </div>
+            {/* Arrow connector between stages — not on last */}
+            {i < pipeline.length - 1 && (
+              <svg
+                className="absolute right-[-7px] top-1/2 -translate-y-1/2 z-10"
+                width="14"
+                height="10"
+                viewBox="0 0 14 10"
+                fill="none"
+                style={{ background: 'var(--bg)' }}
+              >
+                <path
+                  d="M1 5 H12 M9 2 L12 5 L9 8"
+                  stroke="var(--accent)"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              </svg>
+            )}
+          </motion.div>
         ))}
       </div>
     </div>
