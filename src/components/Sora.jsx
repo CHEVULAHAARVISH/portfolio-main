@@ -15,7 +15,15 @@ export default function Sora() {
     >
       <div className="container-edge relative">
         {/* Spacecraft illustration — upper right, desktop only */}
-        <Spacecraft className="absolute right-0 xl:right-4 top-24 w-[320px] xl:w-[360px] hidden lg:block pointer-events-none opacity-85 z-0" />
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 0.85, y: 0 }}
+          viewport={{ once: true, margin: '-20% 0px' }}
+          transition={{ duration: 1, ease: [0.2, 0.8, 0.2, 1], delay: 0.3 }}
+          className="absolute right-0 xl:right-4 top-24 w-[320px] xl:w-[360px] hidden lg:block pointer-events-none z-0"
+        >
+          <Spacecraft />
+        </motion.div>
 
         {/* Eyebrow row */}
         <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest2 mb-6">

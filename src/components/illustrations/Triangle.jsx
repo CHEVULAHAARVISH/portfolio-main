@@ -65,7 +65,7 @@ export default function Triangle({ className = '' }) {
       </g>
 
       {/* Vertices */}
-      {/* Top — ROBOTS (flagship, accent) */}
+      {/* Top — ROBOTS (flagship, accent) — expanding halo + strong pulse */}
       <g>
         <circle
           cx={V.top.x}
@@ -75,8 +75,31 @@ export default function Triangle({ className = '' }) {
           stroke="var(--accent)"
           strokeWidth="1"
           strokeOpacity="0.45"
-        />
-        <circle cx={V.top.x} cy={V.top.y} r="3.5" fill="var(--accent)" />
+        >
+          <animate
+            attributeName="r"
+            values="9; 16; 9"
+            keyTimes="0; 0.5; 1"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="stroke-opacity"
+            values="0.55; 0; 0.55"
+            keyTimes="0; 0.5; 1"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx={V.top.x} cy={V.top.y} r="3.5" fill="var(--accent)">
+          <animate
+            attributeName="opacity"
+            values="1; 0.55; 1"
+            keyTimes="0; 0.5; 1"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </circle>
       </g>
 
       {/* Bottom-left — SERVERS */}
@@ -89,14 +112,40 @@ export default function Triangle({ className = '' }) {
           stroke="var(--fg)"
           strokeOpacity="0.4"
           strokeWidth="1"
-        />
+        >
+          <animate
+            attributeName="r"
+            values="7; 11; 7"
+            keyTimes="0; 0.5; 1"
+            dur="3.6s"
+            begin="0.8s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="stroke-opacity"
+            values="0.5; 0; 0.5"
+            keyTimes="0; 0.5; 1"
+            dur="3.6s"
+            begin="0.8s"
+            repeatCount="indefinite"
+          />
+        </circle>
         <circle
           cx={V.bl.x}
           cy={V.bl.y}
           r="2.5"
           fill="var(--fg)"
           fillOpacity="0.55"
-        />
+        >
+          <animate
+            attributeName="fill-opacity"
+            values="0.85; 0.35; 0.85"
+            keyTimes="0; 0.5; 1"
+            dur="3.2s"
+            begin="0.4s"
+            repeatCount="indefinite"
+          />
+        </circle>
       </g>
 
       {/* Bottom-right — SPACECRAFT */}
@@ -109,14 +158,144 @@ export default function Triangle({ className = '' }) {
           stroke="var(--fg)"
           strokeOpacity="0.4"
           strokeWidth="1"
-        />
+        >
+          <animate
+            attributeName="r"
+            values="7; 11; 7"
+            keyTimes="0; 0.5; 1"
+            dur="3.6s"
+            begin="1.6s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="stroke-opacity"
+            values="0.5; 0; 0.5"
+            keyTimes="0; 0.5; 1"
+            dur="3.6s"
+            begin="1.6s"
+            repeatCount="indefinite"
+          />
+        </circle>
         <circle
           cx={V.br.x}
           cy={V.br.y}
           r="2.5"
           fill="var(--fg)"
           fillOpacity="0.55"
-        />
+        >
+          <animate
+            attributeName="fill-opacity"
+            values="0.85; 0.35; 0.85"
+            keyTimes="0; 0.5; 1"
+            dur="3.2s"
+            begin="2s"
+            repeatCount="indefinite"
+          />
+        </circle>
+      </g>
+
+      {/* Traveling signal dots — flow around the triangle */}
+      {/* Flow direction: ROBOTS → SERVERS → SPACECRAFT → ROBOTS (clockwise) */}
+      <g>
+        {/* Dot 1: ROBOTS → SERVERS (left edge) */}
+        <circle r="3.2" fill="var(--accent)">
+          <animateMotion
+            dur="9s"
+            repeatCount="indefinite"
+            path={`M ${V.top.x} ${V.top.y} L ${V.bl.x} ${V.bl.y}`}
+          />
+          <animate
+            attributeName="opacity"
+            values="0; 1; 1; 0"
+            keyTimes="0; 0.05; 0.95; 1"
+            dur="9s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        {/* Dot 2: SERVERS → SPACECRAFT (bottom edge) */}
+        <circle r="3.2" fill="var(--accent)">
+          <animateMotion
+            dur="9s"
+            begin="3s"
+            repeatCount="indefinite"
+            path={`M ${V.bl.x} ${V.bl.y} L ${V.br.x} ${V.br.y}`}
+          />
+          <animate
+            attributeName="opacity"
+            values="0; 1; 1; 0"
+            keyTimes="0; 0.05; 0.95; 1"
+            dur="9s"
+            begin="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        {/* Dot 3: SPACECRAFT → ROBOTS (right edge) */}
+        <circle r="3.2" fill="var(--accent)">
+          <animateMotion
+            dur="9s"
+            begin="6s"
+            repeatCount="indefinite"
+            path={`M ${V.br.x} ${V.br.y} L ${V.top.x} ${V.top.y}`}
+          />
+          <animate
+            attributeName="opacity"
+            values="0; 1; 1; 0"
+            keyTimes="0; 0.05; 0.95; 1"
+            dur="9s"
+            begin="6s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        {/* Trailing glow behind each dot (optional, subtle) */}
+        <circle r="8" fill="var(--accent)" fillOpacity="0.18">
+          <animateMotion
+            dur="9s"
+            repeatCount="indefinite"
+            path={`M ${V.top.x} ${V.top.y} L ${V.bl.x} ${V.bl.y}`}
+          />
+          <animate
+            attributeName="fill-opacity"
+            values="0; 0.22; 0"
+            keyTimes="0; 0.5; 1"
+            dur="9s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle r="8" fill="var(--accent)" fillOpacity="0.18">
+          <animateMotion
+            dur="9s"
+            begin="3s"
+            repeatCount="indefinite"
+            path={`M ${V.bl.x} ${V.bl.y} L ${V.br.x} ${V.br.y}`}
+          />
+          <animate
+            attributeName="fill-opacity"
+            values="0; 0.22; 0"
+            keyTimes="0; 0.5; 1"
+            dur="9s"
+            begin="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle r="8" fill="var(--accent)" fillOpacity="0.18">
+          <animateMotion
+            dur="9s"
+            begin="6s"
+            repeatCount="indefinite"
+            path={`M ${V.br.x} ${V.br.y} L ${V.top.x} ${V.top.y}`}
+          />
+          <animate
+            attributeName="fill-opacity"
+            values="0; 0.22; 0"
+            keyTimes="0; 0.5; 1"
+            dur="9s"
+            begin="6s"
+            repeatCount="indefinite"
+          />
+        </circle>
       </g>
 
       {/* Vertex labels (mono, uppercase, letter-spaced) */}

@@ -179,8 +179,15 @@ function BlueprintBackdrop() {
       <CornerMark className="bottom-6 left-6" flipY />
       <CornerMark className="bottom-6 right-6" flipX flipY />
 
-      {/* Static triangle — three-domain thesis diagram */}
-      <Triangle className="absolute right-[-2%] top-1/2 -translate-y-1/2 w-[460px] xl:w-[540px] opacity-90 hidden md:block" />
+      {/* Triangle — three-domain thesis diagram, fades in after name reveal */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 0.9, scale: 1 }}
+        transition={{ duration: 1.1, ease: EASE, delay: 2.2 }}
+        className="absolute right-[-2%] top-1/2 -translate-y-1/2 w-[460px] xl:w-[540px] hidden md:block"
+      >
+        <Triangle />
+      </motion.div>
     </div>
   );
 }
