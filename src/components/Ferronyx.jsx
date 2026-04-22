@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import RoboticArm from './illustrations/RoboticArm.jsx';
 
 const inView = {
   initial: { opacity: 0, y: 20 },
@@ -13,7 +14,10 @@ export default function Ferronyx() {
       id="ferronyx"
       className="relative py-28 md:py-36 border-t hairline"
     >
-      <div className="container-edge">
+      <div className="container-edge relative">
+        {/* Robotic arm illustration — upper right, desktop only */}
+        <RoboticArm className="absolute right-2 xl:right-8 top-28 w-[240px] xl:w-[280px] hidden lg:block pointer-events-none opacity-85 z-0" />
+
         {/* Eyebrow row */}
         <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest2 mb-6">
           <span className="flex items-center gap-3">

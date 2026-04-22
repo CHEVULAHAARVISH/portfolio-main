@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Triangle from './illustrations/Triangle.jsx';
 
 const EASE = [0.2, 0.8, 0.2, 1];
 
@@ -178,43 +179,8 @@ function BlueprintBackdrop() {
       <CornerMark className="bottom-6 left-6" flipY />
       <CornerMark className="bottom-6 right-6" flipX flipY />
 
-      {/* A subtle signal-flow diagram on the right — systems drawing */}
-      <svg
-        className="absolute right-0 top-1/2 -translate-y-1/2 opacity-[0.18] hidden md:block"
-        width="520"
-        height="520"
-        viewBox="0 0 520 520"
-        fill="none"
-      >
-        {/* Three nodes in a triangular flow */}
-        <g stroke="var(--fg)" strokeWidth="1">
-          <circle cx="120" cy="180" r="28" fill="none" />
-          <circle cx="400" cy="180" r="28" fill="none" />
-          <circle cx="260" cy="400" r="28" fill="none" />
-          <path d="M148 180 L372 180" strokeDasharray="2 4" />
-          <path d="M135 205 L250 375" strokeDasharray="2 4" />
-          <path d="M385 205 L270 375" strokeDasharray="2 4" />
-        </g>
-        {/* Accent node */}
-        <circle
-          cx="260"
-          cy="400"
-          r="4"
-          fill="var(--accent)"
-        />
-        {/* Labels */}
-        <g
-          fontFamily="JetBrains Mono, monospace"
-          fontSize="9"
-          letterSpacing="1.5"
-          fill="var(--muted)"
-          textAnchor="middle"
-        >
-          <text x="120" y="145">CLOUD</text>
-          <text x="400" y="145">FIELD</text>
-          <text x="260" y="450">ORBIT</text>
-        </g>
-      </svg>
+      {/* Static triangle — three-domain thesis diagram */}
+      <Triangle className="absolute right-[-2%] top-1/2 -translate-y-1/2 w-[460px] xl:w-[540px] opacity-90 hidden md:block" />
     </div>
   );
 }

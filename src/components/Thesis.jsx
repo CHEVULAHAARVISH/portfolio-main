@@ -228,10 +228,10 @@ function DomainFact({ label, value }) {
 function PipelineStrip() {
   return (
     <div
-      className="relative rounded-sm border hairline-strong"
+      className="relative rounded-sm border hairline-strong overflow-hidden"
       style={{ background: 'var(--card)' }}
     >
-      <div className="grid grid-cols-5 divide-x hairline-strong">
+      <div className="grid grid-cols-5 divide-x hairline-strong relative z-10">
         {pipeline.map((stage, i) => (
           <motion.div
             key={stage}
@@ -242,7 +242,7 @@ function PipelineStrip() {
             className="relative p-4 md:p-5 text-center"
           >
             <div
-              className="font-mono text-[10px] uppercase tracking-widest2 mb-2"
+              className={`font-mono text-[10px] uppercase tracking-widest2 mb-2 stage-hi-${i}`}
               style={{ color: 'var(--faint)' }}
             >
               P.0{i + 1}
@@ -254,10 +254,9 @@ function PipelineStrip() {
               {stage}
             </div>
 
-            {/* Arrow connector between stages — not on last */}
             {i < pipeline.length - 1 && (
               <svg
-                className="absolute right-[-7px] top-1/2 -translate-y-1/2 z-10"
+                className="absolute right-[-7px] top-1/2 -translate-y-1/2 z-20"
                 width="14"
                 height="10"
                 viewBox="0 0 14 10"
@@ -276,6 +275,31 @@ function PipelineStrip() {
             )}
           </motion.div>
         ))}
+      </div>
+
+      {/* Traveling pulse — runs left-to-right across full width */}
+      <div
+        className="pipeline-pulse absolute top-1/2 -translate-y-1/2 z-0 pointer-events-none"
+        aria-hidden="true"
+        style={{ left: '0%' }}
+      >
+        <div className="relative -translate-x-1/2">
+          <span
+            className="absolute -left-1.5 top-1/2 -translate-y-1/2 block h-[2px] w-12 rounded-full"
+            style={{
+              background:
+                'linear-gradient(90deg, transparent, var(--accent) 50%, transparent)',
+              opacity: 0.6,
+            }}
+          />
+          <span
+            className="relative inline-block h-2 w-2 rounded-full"
+            style={{
+              background: 'var(--accent)',
+              boxShadow: '0 0 12px var(--accent)',
+            }}
+          />
+        </div>
       </div>
     </div>
   );
