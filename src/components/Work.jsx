@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import RoleGlyph from './illustrations/RoleGlyph.jsx';
 
 const inView = {
   initial: { opacity: 0, y: 20 },
@@ -12,6 +13,7 @@ const roles = [
     company: 'Sanas',
     role: 'Software Engineer · Platform Performance',
     location: 'Bengaluru, IN',
+    glyph: 'audio',
     bullets: [
       'Led platform-wide performance engineering for a real-time voice system under production load.',
       'Instrumented 100% of microservices with New Relic — full-stack METL observability across metrics, events, logs and traces.',
@@ -25,6 +27,7 @@ const roles = [
     company: 'Temperstack',
     role: 'Founding Engineer · AI Infrastructure & Reliability',
     location: 'Bengaluru, IN',
+    glyph: 'alert',
     bullets: [
       'Built an AI-powered SRE agent on LangGraph for smart runbook execution and autonomous incident resolution.',
       'Led development of alert correlation and auto-resolution engines; reduced MTTR ≈45% across customer deployments.',
@@ -41,16 +44,19 @@ const prior = [
     range: '2022 — 2023',
     place: 'AMS India',
     role: 'Computer Vision Developer',
+    glyph: 'camera',
   },
   {
     range: '2021 — 2023',
     place: 'Mirasys',
     role: 'Student Intern — Deep Vision',
+    glyph: 'scan',
   },
   {
     range: '2021',
     place: 'Youth India Foundation',
     role: 'Management Intern',
+    glyph: 'people',
   },
 ];
 
@@ -134,10 +140,18 @@ export default function Work() {
                   {p.range}
                 </div>
                 <div
-                  className="md:col-span-4 text-base"
+                  className="md:col-span-4 text-base flex items-center gap-2.5"
                   style={{ color: 'var(--fg)' }}
                 >
-                  {p.place}
+                  {p.glyph && (
+                    <span
+                      className="inline-flex shrink-0"
+                      style={{ color: 'var(--accent)' }}
+                    >
+                      <RoleGlyph type={p.glyph} className="h-4 w-4" />
+                    </span>
+                  )}
+                  <span>{p.place}</span>
                 </div>
                 <div
                   className="md:col-span-5 text-sm"
@@ -192,11 +206,19 @@ function RoleEntry({ role, index }) {
           {role.range}
         </div>
         <div
-          className="font-mono text-[11px] uppercase tracking-widest2"
+          className="font-mono text-[11px] uppercase tracking-widest2 mb-4"
           style={{ color: 'var(--faint)' }}
         >
           {role.location}
         </div>
+        {role.glyph && (
+          <span
+            className="inline-flex"
+            style={{ color: 'var(--accent)' }}
+          >
+            <RoleGlyph type={role.glyph} className="h-6 w-6" />
+          </span>
+        )}
       </div>
 
       {/* Body */}

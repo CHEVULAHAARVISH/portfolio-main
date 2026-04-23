@@ -30,9 +30,122 @@ export default function Spacecraft({ className = '' }) {
           <stop offset="50%" stopColor="var(--accent)" stopOpacity="0.55" />
           <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
         </linearGradient>
+
+        {/* Earth fade — faint radial so limb doesn't overpower */}
+        <radialGradient id="earth-fade" cx="20%" cy="90%" r="80%">
+          <stop offset="0%" stopColor="var(--fg)" stopOpacity="0.07" />
+          <stop offset="80%" stopColor="var(--fg)" stopOpacity="0.01" />
+          <stop offset="100%" stopColor="var(--fg)" stopOpacity="0" />
+        </radialGradient>
+
+        {/* Umbra fill — deepens slightly toward the center of the cone */}
+        <linearGradient id="umbra-fill" x1="0%" y1="50%" x2="100%" y2="50%">
+          <stop offset="0%" stopColor="var(--fg)" stopOpacity="0.06" />
+          <stop offset="60%" stopColor="var(--fg)" stopOpacity="0.03" />
+          <stop offset="100%" stopColor="var(--fg)" stopOpacity="0" />
+        </linearGradient>
       </defs>
 
-      {/* Label header */}
+      {/* ===== Earth limb + umbra cone (below spacecraft visually) ===== */}
+      {/* Sun direction indicator — tiny arrow + label at bottom-left edge */}
+      <g
+        fontFamily="JetBrains Mono, monospace"
+        fontSize="7"
+        letterSpacing="1.3"
+        fill="var(--faint)"
+      >
+        <g stroke="var(--faint)" strokeWidth="0.8" fill="none">
+          <line x1="16" y1="310" x2="4" y2="310" />
+          <path d="M 8 306 L 4 310 L 8 314" />
+        </g>
+        <text x="20" y="313">SUN</text>
+      </g>
+
+      {/* Umbra cone — tapered dashed lines + subtle fill */}
+      <g>
+        <polygon
+          points="0,252 148,316 360,280 360,232"
+          fill="url(#umbra-fill)"
+        />
+        <line
+          x1="0"
+          y1="252"
+          x2="360"
+          y2="232"
+          stroke="var(--fg)"
+          strokeOpacity="0.3"
+          strokeDasharray="2 5"
+          strokeWidth="0.8"
+        />
+        <line
+          x1="148"
+          y1="316"
+          x2="360"
+          y2="280"
+          stroke="var(--fg)"
+          strokeOpacity="0.3"
+          strokeDasharray="2 5"
+          strokeWidth="0.8"
+        />
+      </g>
+
+      {/* Earth — partial arc peeking in from bottom-left */}
+      <g>
+        <circle
+          cx="-20"
+          cy="440"
+          r="200"
+          fill="url(#earth-fade)"
+          stroke="var(--fg)"
+          strokeOpacity="0.42"
+          strokeWidth="1"
+        />
+        {/* Atmospheric ring — very subtle halo above Earth surface */}
+        <circle
+          cx="-20"
+          cy="440"
+          r="210"
+          fill="none"
+          stroke="var(--accent)"
+          strokeOpacity="0.18"
+          strokeWidth="0.6"
+        />
+        {/* Terminator tick — day/night boundary hint */}
+        <line
+          x1="0"
+          y1="252"
+          x2="148"
+          y2="316"
+          stroke="var(--fg)"
+          strokeOpacity="0.28"
+          strokeDasharray="1 4"
+          strokeWidth="0.7"
+        />
+        {/* Earth label */}
+        <text
+          x="26"
+          y="298"
+          fontFamily="JetBrains Mono, monospace"
+          fontSize="7"
+          letterSpacing="1.4"
+          fill="var(--faint)"
+        >
+          EARTH · LIMB
+        </text>
+      </g>
+
+      {/* UMBRA label — centered in cone, accent color for emphasis */}
+      <g
+        fontFamily="JetBrains Mono, monospace"
+        fontSize="8"
+        letterSpacing="1.8"
+      >
+        <text x="255" y="263" fill="var(--accent)" fillOpacity="0.7">
+          UMBRA
+        </text>
+      </g>
+
+      {/* ===== Label header (now includes scenario) ===== */}
       <g
         fontFamily="JetBrains Mono, monospace"
         fontSize="8"
@@ -42,7 +155,50 @@ export default function Spacecraft({ className = '' }) {
           SPACECRAFT / BUS-2
         </text>
         <text x="10" y="40" fill="var(--faint)">
-          ATT · NOMINAL
+          MODE · AUTONOMOUS BLACKOUT
+        </text>
+      </g>
+
+      {/* Scenario badge — top-right, bordered, accent-tinted */}
+      <g>
+        <rect
+          x="222"
+          y="16"
+          width="128"
+          height="28"
+          fill="none"
+          stroke="var(--accent)"
+          strokeOpacity="0.55"
+          strokeWidth="0.8"
+        />
+        <circle cx="233" cy="30" r="2.2" fill="var(--accent)">
+          <animate
+            attributeName="opacity"
+            values="1; 0.35; 1"
+            keyTimes="0; 0.5; 1"
+            dur="1.6s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <text
+          x="242"
+          y="28"
+          fontFamily="JetBrains Mono, monospace"
+          fontSize="7.5"
+          letterSpacing="1.5"
+          fill="var(--accent)"
+        >
+          SCENARIO · ECLIPSE
+        </text>
+        <text
+          x="242"
+          y="39"
+          fontFamily="JetBrains Mono, monospace"
+          fontSize="7"
+          letterSpacing="1.3"
+          fill="var(--faint)"
+        >
+          T+00:42:30
         </text>
       </g>
 

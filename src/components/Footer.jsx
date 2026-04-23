@@ -1,11 +1,16 @@
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative border-t hairline" style={{ color: 'var(--muted)' }}>
+    <footer
+      className="relative border-t hairline"
+      style={{ color: 'var(--muted)' }}
+    >
       <div className="container-edge py-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[11px] uppercase tracking-widest2">
           <div className="flex items-center gap-3 flex-wrap">
-            <span style={{ color: 'var(--fg)' }}>© {year} Haarvish Chevula</span>
+            <span style={{ color: 'var(--fg)' }}>
+              © {year} Haarvish Chevula
+            </span>
             <span className="opacity-40">/</span>
             <span>All signals reserved</span>
           </div>

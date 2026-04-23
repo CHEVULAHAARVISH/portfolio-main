@@ -39,7 +39,7 @@ export default function Contact() {
       id="contact"
       className="relative py-20 md:py-36 border-t hairline"
     >
-      <div className="container-edge">
+      <div className="container-edge relative">
         {/* Eyebrow */}
         <div className="flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono uppercase tracking-widest2 mb-6">
           <span className="flex items-center gap-3">
@@ -151,33 +151,8 @@ export default function Contact() {
           ))}
         </motion.div>
 
-        {/* Coordinates block */}
-        <motion.div
-          {...inView}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          <Coord label="Station" value="Bengaluru · IN" />
-          <Coord label="Latitude / Longitude" value="12.9716° N · 77.5946° E" />
-          <Coord label="Timezone" value="IST (UTC +05:30)" />
-        </motion.div>
       </div>
     </section>
   );
 }
 
-function Coord({ label, value }) {
-  return (
-    <div className="border-t hairline-strong pt-5">
-      <div
-        className="font-mono text-[11px] uppercase tracking-widest2 mb-1.5"
-        style={{ color: 'var(--faint)' }}
-      >
-        {label}
-      </div>
-      <div className="font-mono text-[13px]" style={{ color: 'var(--fg)' }}>
-        {value}
-      </div>
-    </div>
-  );
-}

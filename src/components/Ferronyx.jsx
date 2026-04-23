@@ -1,6 +1,7 @@
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Humanoid from './illustrations/Humanoid.jsx';
+import AGVSchematic from './illustrations/AGVSchematic.jsx';
 
 const inView = {
   initial: { opacity: 0, y: 20 },
@@ -329,6 +330,14 @@ function TerminalMock() {
         >
           ferronyx / runtime
         </span>
+      </div>
+
+      {/* AGV subject-of-investigation strip */}
+      <div
+        className="border-b hairline-strong px-4 py-3 flex justify-center"
+        style={{ background: 'var(--card)' }}
+      >
+        <AGVSchematic className="h-[72px] w-full max-w-[300px]" />
       </div>
 
       {/* Topic rows — streamed in */}
