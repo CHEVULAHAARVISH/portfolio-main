@@ -4,8 +4,14 @@ import { ImageResponse } from '@vercel/og';
  * Dynamic OG image — renders the hero plate at 1200×630 using the
  * site's actual typography (Instrument Serif italic + JetBrains Mono).
  *
- * Edit the JSX below and Vercel rebuilds the image on next request.
+ * Runs on Vercel's Edge runtime (the canonical environment for
+ * @vercel/og — avoids the Node.js CJS/ESM module-detection issues
+ * that plague serverless function bundling for OG endpoints).
  */
+
+export const config = {
+  runtime: 'edge',
+};
 
 const TEXT_SUBSET =
   'Haarvish Chevula. Runtime intelligence for autonomous systems on servers robots and orbit. ' +
