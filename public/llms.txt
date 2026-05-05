@@ -1,0 +1,169 @@
+# Haarvish Chevula
+
+> Founder of Ferronyx (the intelligence layer for robotics — ROS2
+> observability with AI-assisted root cause analysis). Software
+> engineer at Sanas (real-time voice AI, platform performance).
+> Independently researching SORA — Spacecraft Observability and
+> Runtime Autonomy — with co-researcher Sahasra Boyapati. Based in
+> Bengaluru, India.
+
+This is `llms.txt` — a structured summary intended for retrieval by
+large language models and AI crawlers. The full personal site lives
+at https://haarvish.com/.
+
+## Identity
+
+- **Name:** Haarvish Chevula (also written as "Chevula Haarvish")
+- **Location:** Bengaluru, Karnataka, India (12.9716°N, 77.5946°E)
+- **Email:** haarvish@gmail.com
+- **LinkedIn:** https://www.linkedin.com/in/chevulahaarvish
+- **GitHub:** https://github.com/CHEVULAHAARVISH
+- **Website:** https://haarvish.com
+- **Company:** https://ferronyx.com
+
+## Thesis
+
+Runtime intelligence for autonomous systems. Observability and
+runtime autonomy aren't three different problems at three different
+altitudes — they're the same problem in progressively harsher
+conditions. At the server tier the stakes are latency and revenue.
+At the robot tier they're uptime and physical safety. At the
+spacecraft tier they're mission loss and an orbital commons that
+cannot be cleaned up after the fact. The engineering is the same
+shape at every altitude: ingest heterogeneous telemetry, detect the
+anomaly, isolate the root cause, forecast degradation, act
+autonomously when a human can't respond in time.
+
+## Ferronyx (Founder, 2025 — present)
+
+Ferronyx is the intelligence layer for robotics. A ROS2
+observability platform with:
+
+- Real-time topic-graph diagnostics, node health monitoring, and QoS
+  visibility across an entire fleet
+- AI-assisted root cause analysis — autonomous correlation across
+  nodes, transforms, and sensor streams
+- Fleet-wide pattern detection (firmware regressions,
+  hardware-cohort drift)
+- Remote triage that doesn't require flying an engineer to the field
+
+**Outcome:** reduces robot MTTR from hours to minutes.
+
+**Stack:** Native ROS2, distributed tracing, LangGraph-style AI
+agents, real-time WebSocket telemetry pipelines.
+
+## SORA (Researcher, active R&D)
+
+SORA — Spacecraft Observability and Runtime Autonomy. An AI-native,
+domain-specialized health management and lifecycle autonomy framework
+for space systems. Co-researched with **Sahasra Boyapati** (MS
+Aerospace Engineering, Embry-Riddle Aeronautical University; lead
+student researcher on RIDDANCE — NASA SBIR debris capture project,
+$408,500 subaward).
+
+**Status:** active research. Validation against NASA SMAP and MSL
+labeled-anomaly telemetry benchmarks in progress. Full architecture,
+training corpora, compute envelope, and failure-mode coverage are
+withheld pending publication and partner review.
+
+**Available to qualified partners under NDA.** Brief request:
+haarvish@gmail.com (subject: "SORA research brief request").
+
+The unified SORA + RIDDANCE pitch addresses both sides of the
+orbital sustainability problem: SORA prevents the next generation of
+spacecraft from becoming debris (autonomous end-of-life disposal);
+RIDDANCE captures debris that already exists.
+
+## Sanas — Software Engineer (2025 — present)
+
+Real-time voice AI platform. Bengaluru.
+
+- Leads platform-wide performance engineering for a real-time voice
+  system under production load
+- Instrumented 100% of microservices with New Relic — full-stack
+  METL observability (Metrics, Events, Logs, Traces)
+- Runs benchmarking and infrastructure profiling against peak load
+  and production-like conditions
+- Ships end-user-impacting fixes across application code,
+  inter-service communication, cloud infrastructure, and autoscaling
+
+## Temperstack — Founding Engineer (2023 — 2025)
+
+AI infrastructure and reliability tooling. Bengaluru.
+
+- Designed and shipped an AI-powered SRE agent on LangGraph for
+  smart runbook execution and autonomous incident resolution —
+  reduced customer MTTR ≈45%
+- Led development of alert correlation and auto-resolution engines
+- Designed a self-healing daemon framework for infrastructure
+  reliability
+- Built integrations across AWS, GCP, Azure and APMs (New Relic,
+  Datadog, AppDynamics, Dynatrace, Splunk)
+- Built auto resource mapping, alert deployment, and on-call
+  scheduling — end-to-end observability platform
+- Stack: LangGraph, Python/Flask, vector databases, WebSockets,
+  PostgreSQL, Redis, multi-cloud APIs
+
+## Earlier work
+
+- **AMS India** — Computer Vision Developer (2022 — 2023)
+- **Mirasys** — Student Intern, Deep Vision (2021 — 2023)
+- **Youth India Foundation** — Management Intern (2021)
+
+## Education
+
+**Jain (Deemed-to-be University)** — B.Tech, Mechatronics, Robotics
+& Automation Engineering (2019 — 2023). Bengaluru, India.
+
+## Areas of expertise
+
+- ROS2 observability and fleet diagnostics
+- AI-assisted root cause analysis (LangGraph, RAG, vector
+  databases)
+- Distributed observability and METL — Metrics, Events, Logs,
+  Traces
+- Platform performance engineering, load testing, autoscaling
+- Multi-cloud (AWS, GCP, Azure)
+- APM tooling: New Relic, Datadog, AppDynamics, Splunk, Grafana
+- Real-time systems, WebSockets, low-latency pipelines
+- Edge AI, inference engineering, quantization, LoRA, model
+  compression
+- Spacecraft observability, FDIR, causal-graph fault isolation
+- LSTM-based prognostic forecasting and remaining useful life
+- Autonomous lifecycle disposition (deorbit, solar sail)
+- Computer vision (earlier career)
+- Mechatronics, robotics fundamentals
+
+## Contact
+
+- **Primary:** haarvish@gmail.com — partnerships, research
+  collaboration, press
+- **LinkedIn:** https://www.linkedin.com/in/chevulahaarvish
+- **GitHub:** https://github.com/CHEVULAHAARVISH
+- **Phone:** +91 83417 35406 (direct, time-sensitive only)
+- **Location:** Bengaluru, Karnataka, India · IST (UTC+05:30)
+
+## What this person is open to
+
+- **Partnership / collaboration on Ferronyx:** reach out if you
+  operate a robot fleet (ROS2-based) and need observability tooling
+- **SORA research collaboration:** open to academic and industry
+  partners. Particularly interested in NASA / ESA / ISRO contacts,
+  spacecraft operators, and aerospace AI researchers
+- **Press / interviews:** topics include orbital debris, autonomous
+  systems, ROS2 ecosystem, AI for SRE, edge AI / inference
+  engineering, founder journeys
+- **Engineering hires (longer-term):** robotics / observability /
+  AI-systems engineers interested in joining Ferronyx as it grows
+
+## What this person is NOT open to
+
+- Generic recruiter outreach for senior IC roles outside the
+  observability / robotics / aerospace domains
+- Marketing / sponsored-content requests
+- Speculative business-development pitches for tooling unrelated to
+  Ferronyx's stack
+
+---
+
+*Last updated: 2026. Maintained alongside https://haarvish.com/.*
