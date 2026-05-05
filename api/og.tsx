@@ -20,6 +20,10 @@ const TEXT_SUBSET =
 
 async function loadGoogleFont(family, weight, style) {
   const italic = style === 'italic' ? '1' : '0';
+  // Pass family with spaces — URLSearchParams encodes spaces as `+`,
+  // which Google Fonts interprets correctly. Passing literal `+` would
+  // get encoded to `%2B` and Google would look for a family named
+  // "JetBrains+Mono" (with the actual plus character).
   const params = new URLSearchParams({
     family: `${family}:ital,wght@${italic},${weight}`,
     text: TEXT_SUBSET,
@@ -33,16 +37,24 @@ async function loadGoogleFont(family, weight, style) {
     },
   }).then((r) => r.text());
 
-  const match = css.match(/src:\s*url\((.+?)\)\s*format\('(woff2|truetype|opentype)'\)/);
-  if (!match) throw new Error(`Font URL not found for ${family}`);
+  // Accept single OR double quotes around the format() value.
+  const match = css.match(
+    /src:\s*url\((.+?)\)\s*format\(['"](woff2|truetype|opentype)['"]\)/,
+  );
+  if (!match) {
+    throw new Error(
+      `Font URL not found for "${family}" (weight ${weight}, ${style}). ` +
+        `CSS response head: ${css.slice(0, 200)}`,
+    );
+  }
   return fetch(match[1]).then((r) => r.arrayBuffer());
 }
 
 export default async function handler() {
   const [serifItalic, monoRegular, monoMedium] = await Promise.all([
-    loadGoogleFont('Instrument+Serif', 400, 'italic'),
-    loadGoogleFont('JetBrains+Mono', 400, 'normal'),
-    loadGoogleFont('JetBrains+Mono', 500, 'normal'),
+    loadGoogleFont('Instrument Serif', 400, 'italic'),
+    loadGoogleFont('JetBrains Mono', 400, 'normal'),
+    loadGoogleFont('JetBrains Mono', 500, 'normal'),
   ]);
 
   const BG = '#080808';
