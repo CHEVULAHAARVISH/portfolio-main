@@ -25,12 +25,6 @@ const channels = [
     value: 'github.com/CHEVULAHAARVISH',
     note: 'Code · experiments',
   },
-  {
-    label: 'Telephone',
-    href: 'tel:+918341735406',
-    value: '+91 83417 35406',
-    note: 'Direct · time-sensitive',
-  },
 ];
 
 export default function Contact() {
